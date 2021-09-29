@@ -1,0 +1,6 @@
+Possible examples include:
+Purchase ordering system*
+Banking application*
+Collectable card game tracker*
+Employee management system
+
