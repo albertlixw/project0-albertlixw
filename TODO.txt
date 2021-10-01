@@ -4,3 +4,33 @@ Banking application*
 Collectable card game tracker*
 Employee management system
 
+
+
+FULL backlog: 
+
+list all available products with product id with prices
+purchase with id and $account, seller get money from customer
+
+product: product id, name, price, stock. 
+
+buyer: id, money, role: buyer
+buyer can spend money to change stock, and seller's money
+
+purchase(itemId, quantity of purchase): 
+
+buyer money - item price * quantity of purchase; seller money + item price * quantity of purchase; stock - quantity of purchase;
+
+print receipt: seller money amount, quantity of purchase, current stock, money spent, tracking number, transactionID
+
+if buyer not enough money: throw exception/catch and fail purchase. 
+if out of stock: throw out of stock message. 
+
+
+seller: id, money, role: seller
+seller can change item price, stock, name, id
+can add new item, remove existing item.
+
+admin: can change everything. 
+given transaction ID can find a purchase, which contains 
+
+transaction: contains list of itemids purchased, their quantity, money spent and tracking number, as well as buyer id seller id. 
