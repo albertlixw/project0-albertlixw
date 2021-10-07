@@ -6,6 +6,26 @@ Employee management system
 
 
 
+Banking App: 
+FULL backlog: 
+User, admin, bank clerk. 
+
+User: userId, balance, deposit, withdraw, check account info, transaction log 
+
+deposit(): user money--, account money++, transaction log: add new log
+transactionLog: obj contains userId, clerk id, date&time, amount of money in or out, comment. 
+
+withdraw(): user money++, account money--, transactionlog add new withdraw log. 
+
+checkInfo(userId, account number): get balance, list transactionlog. 
+
+Clerk: clerkId, getAccountInfo(userId, account number), createsAccounts and CancelAccounts
+
+admin: have all the functions, plus 
+
+
+
+
 FULL backlog: 
 
 list all available products with product id with prices
