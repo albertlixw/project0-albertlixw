@@ -15,78 +15,111 @@ public class MenuController {
     private static Logger log = LoggerFactory.getLogger(MenuController.class);
     private UserService userService = new UserService();
 
-    public void signUp(){
-        System.out.println("Welcome! ");
-        int balance = Integer.parseInt(sc.nextLine());
-    }
-
     public User getUser() throws NullPointerException{
-        System.out.println("Welcome to user selection: Press 1 to login to existing account, Press 2 to sign up;");
+        System.out.println("Welcome to user selection: Press 1 to select existing account, Press 2 to sign up;");
         String input = sc.nextLine();
-        HashMap<String, User> userList = UserService.getUserList();
+
+        HashMap<String, User> userList = userService.getUserList();
         User user;
+
         switch(input.toLowerCase()){
             case "1" : {
-                login();
-
-                System.out.println("Please enter account id: ");
-                String id = sc.nextLine();
-
                 try{
-                    if(userList.containsKey(id)){
-                        System.out.println();
+                    System.out.println("Please enter account id");
+                    String id = sc.nextLine();
+                    while(!userList.containsKey(id)){
+                        System.out.println("account not found, please try again. ");
+                        id = sc.nextLine();
                     }
-                    System.out.println("account doesn't exist, please try again. Enter -1 to sign up");
-                    id = sc.nextLine();
-                    if(id.equals("-1")) break;
-
-
+                    System.out.println("account found, please login");
+//                    id = sc.nextLine();
+//                    if(id.equals("-1")) break;
                     user = userList.get(id);
                     return user;
                 }catch(NullPointerException e){
-                    System.out.println(e.getMessage());
+                    log.warn("user exists but failed to get from List. " + e.getMessage() );
+                    System.out.println("failed to retrieve account, please try again. ");
+                    return getUser();
                 }
+
+
             } case "2" :{
-                user = newUserBuilder();
+                user = userService.newUserBuilder();
                 return user;
             } 
         }
-        user = new User();
-        return user;
+        System.out.println("invalid choice, please try again. ");
+        return getUser();
     }
 
     public void userUI(User user){
+        login(user);
         System.out.println("Dear " + user.getRole()+", What would you like to do today?");
         switch(user.getRole()){
-            case "customer":{
-                System.out.println("Enter 1 for deposit, 2 for withdrawal, 3 to get transaction log");
+            case "admin":{
+                System.out.println("Are you here to assign roles? y/n");
+                if(sc.nextLine().equals("y")){
+                    userService.assignRole(user);
+                }
+                    System.out.println("Transferring to clerk's UI");
+            }
+            case "clerk" : {
+                System.out.println("Dear clerk: What would you like to do today? 1. Check any user's info. 2. Change password of a user");
                 switch(sc.nextLine()){
                     case "1":{
-//                        userService.deposit();
+                        userService.getAnyUserInfo(user);
+                        break;
+                    }
+                    case "2":{
+                        userService.getAnyUserInfo(user);
+                        userService.changePwd(user);
+                        break;
+                    }
+                }
+                System.out.println("Transferring to customer's UI");
+
+            }
+            case "customer":{
+                System.out.println("Enter 1 for deposit, 2 for withdrawal, 3 for account Info, 4 to change password");
+                switch(sc.nextLine()){
+                    case "1":{
+                        System.out.println("How much would you like to deposit?");
+                        double amount = sc.nextDouble();
+                        userService.deposit(user, amount);
+                        userService.accountInfo(user);
                         break;
                     }
                     case "2" :{
-
+                        System.out.println("How much would you like to withdraw?");
+                        double amount = sc.nextDouble();
+                        userService.withdraw(user, amount);
+                        userService.accountInfo(user);
+                        break;
                     }
 
                     case "3" : {
+                        userService.accountInfo(user);
+                        break;
+                    }
+                    case "4":{
+                        userService.changePwd(user);
+                        break;
+                    }
+                    case "5": {
 
+                        System.out.println("Which account id do you wanna transfer to?");
+                        String accountId = sc.nextLine();
+                        System.out.println("How much money do you wanna transfer to? ");
+                        double amount = sc.nextDouble();
+                        userService.transfer(user, accountId, amount);
+                        break;
                     }
                 }
                 break;
             }
 
-            case "clerk" : {
-                System.out.println("Dear clerk: What would you like to do today?");
-                System.out.println("What should employee be able to do?!? Enter 1 to create account, 2 for deleting accounts, 3 to get transaction log");
-                sc.nextLine();
-                break;
-            }
-            case "admin":{
-                System.out.println("which account id would you modify today?");
-                System.out.println("This account currently has role: XX. Which role do you wanna give this account? ");
 
-            }
+
             default: {
                 System.out.println("invalid input, please try again");
                 break;
@@ -109,55 +142,19 @@ public class MenuController {
 
 
 
-    private User newUserBuilder() {
-        User user;
-        System.out.println("Please enter your id");
-        String id = sc.nextLine();
 
-        HashMap<String, User> userList = userService.getUserList();
-        while(userList.containsKey(id)&&id!="-1"){
-            System.out.println("id entered already exists, please try again. Enter -1 to exit. ");
-            id = sc.nextLine();
-        }
+    public static void login(User user){
+//        System.out.println("Please enter account id: ");
+//        String id = sc.nextLine();
 
-        System.out.println("Please enter your role");
-        String role = sc.nextLine();
-
-        while(!(role.equals("customer")||role.equals("admin")||role.equals("clerk"))){
-            System.out.println("invalid input, please try again");
-            role = sc.nextLine();
-        }
-
-        System.out.println("Please enter your balance");
-        int balance = Integer.parseInt(sc.nextLine());
-
-        System.out.println("Please enter your password");
-        String pwd = sc.nextLine();
-
-        user = new User(id, role, balance, pwd);
-        userList.put(id, user);
-        return user;
-    }
-    public static void login(){
-
-
-        System.out.println("what is your username?");
-
-        String username = sc.nextLine();
-        if(username.equals("abc")){
             System.out.println("please enter the pwd");
             String pwd = sc.nextLine();
-            if(pwd.equals("123")){
-                User user = new User();
+            if(pwd.equals(user.getPwd())){
+
                 System.out.println("login successful! Welcome "+ user.getRole() + " " + user.getId());
                 //check account type: user? clerk? admin?
-//                userUI(user);
             }else{
                 System.out.println("login failed, please try again. ");
             }
-        }else{
-            System.out.println("Invalid username");
-        }
-
     }
 }

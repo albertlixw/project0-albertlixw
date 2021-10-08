@@ -3,10 +3,21 @@ package models;
 public class User {
     private String id;//default 0
     private String role; //customer, clerk, admin
-    private int money;//admin have no money
+    private double money;//admin have no money
     private String pwd;
 
-    public User(String id, String role, int money, String pwd){
+    private String keyWord;
+
+    //for changing password authorization
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public User(String id, String role, double money, String pwd){
         this.id = id;
         this.role = role;
         this.money = money;
@@ -20,9 +31,7 @@ public class User {
         this.pwd = "";
     }
 
-    public void purchase(){
 
-    }
 
     public String getId() {
         return id;
@@ -40,11 +49,11 @@ public class User {
         this.role = role;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
