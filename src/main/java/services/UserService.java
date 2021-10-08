@@ -70,7 +70,11 @@ public class UserService {
         }while(pwd==null||confirmPwd==null||!pwd.equals(confirmPwd));
 
         //clerk approve
-        approve();
+        System.out.println("Needs approval from admin/clerk");
+
+        while(!approve()){
+            System.out.println("Your application got denied. Please try again, or come another day. ");
+        }
 
         user = new User(id, role, balance, pwd);
         userList.put(id, user);
@@ -87,7 +91,7 @@ public class UserService {
     }
 
     public void withdraw(User user, double amount){
-        while(amount > user.getMoney()){
+        while(amount > user.getMoney() || amount < 0){
             System.out.println("insufficient balance, please try again. ");
             amount = sc.nextDouble();
         }
@@ -122,6 +126,7 @@ public class UserService {
         System.out.println("Which account id would you like to check info?");
         String checkAccountId = sc.nextLine();
         accountInfo(userList.get(checkAccountId));
+        System.out.println("Account Keyword: " + userList.get(checkAccountId).getKeyWord());
     }
 
     public void changePwd(User user){
@@ -142,12 +147,42 @@ public class UserService {
     }
 
     public boolean approve(){
-        //userList
-        return true;
+        System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk account id");
+
+        User authorized = userList.get(sc.nextLine());
+        while(authorized.getRole().equals("customer")){
+            System.out.println("Customers cannot approve applications. Please try again. ");
+            authorized = userList.get(sc.nextLine());
+        }
+        System.out.println("Dear admin/clerk, please enter your password");
+        String pwd = sc.nextLine();
+        while(!authorized.getPwd().equals(pwd)){
+            System.out.println("password incorrect, please try again");
+            pwd = sc.nextLine();
+        }
+
+        System.out.println("login successful! Do you approve this action? y/n");
+        String input = sc.nextLine();
+        if(input.equals("y")){
+            System.out.println("approved");
+            return true;
+        }else if(input.equals("n")){
+            System.out.println("denied");
+            return false;
+        }
+        System.out.println("Unexpected input detected. Please try again. ");
+        return approve();
     }
 
     public void deleteAccount(){
-        approve();
+        boolean bool = approve();
+        if(bool) {
+            System.out.println("Which account id do you want to delete?");
+            String id = sc.nextLine();
+            userList.remove(id);
+        }else{
+            System.out.println("failed to delete account");
+        }
     }
 
     public void transfer(User user, String accountId, double amount) {
