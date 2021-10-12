@@ -1,63 +1,97 @@
 package models;
 
 public class User {
-    private String id;//default 0
-    private String role; //customer, clerk, admin
-    private double money;//admin have no money
+    private int id;//default 0
+    private int level; //customer, clerk, admin
+//    private double money;//admin have no money
+
+    private String username;
     private String pwd;
 
-    private String keyWord;
+    private String keyword;
 
-    //for changing password authorization
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
-    }
-
-    public User(String id, String role, double money, String pwd){
-        this.id = id;
-        this.role = role;
-        this.money = money;
+    public User(int level, String username, String pwd, String keyword){
+        this.level = level;
+        this.username = username;
         this.pwd = pwd;
+        this.keyword = keyword;
     }
 
     public User(){
-        this.id = "abc";
-        this.role = "customer";
-        this.money = 0;
-        this.pwd = "";
+        super();
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", level='" + level + '\'' +
+                ", username='" + username + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", home=" + home.toString() +
+                '}';
+    }
 
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public int getLevel() {
+        return level;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    public double getMoney() {
-        return money;
+    public String getUsername() {
+        return username;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPwd() {return pwd;}
+    public String getPwd() {
+        return pwd;
+    }
 
-    public void setPwd(String pwd) {this.pwd = pwd;}
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    private Home home;
+
+    public Home getHome() {
+        return home;
+    }
+
+    public void setHome(Home home) {
+        this.home = home;
+    }
+
+    //for changing password authorization
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+
+
+
+//    public User(){
+//        this.id = "abc";
+//        this.level = "customer";
+////        this.money = 0;
+//        this.pwd = "";
+//    }
+
 }
