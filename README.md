@@ -1,15 +1,15 @@
 # Project 0
 
 **Description**
-Leveraging Java 8, create a CLI application with a multi-tier user system. You may choose the actual use case for your application as long as it meets all the requirements defined below. 
+Leveraging Java 8, create a CLI application with a multi-tier user system. 
 
-Possible examples include:
+E.g. 
 * Banking application
 * Employee management system
 * Collectable card game tracker
 * Purchase ordering system
 
-**Requirements**
+**TODO**
 * Technologies:
   *	Java 8
     * Scanner (CLI inputs)
@@ -41,7 +41,7 @@ Possible examples include:
   * A SQL Script file that can be used to create a clone of your database structures. 
   * Stretch Goal: A slide show presentation introducing your application before demoing it. 
 
-**Example Bank Application Requirements**
+**Bank Application Requirements**
 *	Customers of the bank should be able to register with a username and password, and apply to open an account.
     * Stretch Goal: Customers should be able to apply for joint accounts
 *	Once the account is open, customers should be able to withdraw, deposit, and transfer funds between accounts
@@ -84,14 +84,8 @@ The project will be evaluated out of 100 points split between three main catagor
 
     >A: The project will be due no earlier then Wednesday of Week 3. The exact due date will be set by QC as they schedule project 0 presentations. 
 
-2. Can I have an extension? 
-    >A: No. While you are encouraged to continue to work on your projects past the date of the project presentation for your own learning benefit, extensions can not be accommodated. If for some reason you can not be present at the time of project presentations you will need to schedule a time BEFORE the due date to present your project. 
-
 3. Is there a code freeze? 
     >A: It is recommended that you institute your own code freeze at least a day before the project presentations. However, this is a recommendation only; it will not be enforced. NOTE: The code that will be evaluated by your trainer will be the code you last pushed to your repository BEFORE the time set for project presentations. Code submitted while presentations are on-going or after will not be evaluated. 
-
-4. What happens if I break my project that was mostly working right before the due date? 
-    >A: As you should have been regularly pushing code to your repository you should be able to roll back to previously working version. If you have not regularly pushed your code and do not have a working commit to return to you will need to present the state of your application in its current form. 
 
 5. Who will be evaluating the project? 
     >A: Your trainer will be the one providing the full evaluation of your projects. However, the QC team will also be present at presentations to ask questions about your project and consult with your trainer. 
@@ -101,12 +95,3 @@ The project will be evaluated out of 100 points split between three main catagor
 
 7. What is a passing score? 
     >A: 75% is the base expected passing score.
-
-8. What are stretch goals?
-  >A: Stretch goals are extensions to the project that if completed will grant bonus points. However, stretch goals will only be considered if all the required functionality (i.e. requirements that are not stretch goals) are completed. 
-
-8. If I fail the project will I be released from training?  
-    >A: The project is a major component of the determination process for continued participation in training. Failure to present a project that at least has minimum functionality will lead to a release. 
-
-9. Are there really no extensions? 
-    >A: There are not.
