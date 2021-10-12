@@ -11,6 +11,8 @@ public class Account {
         this.balance = balance;
     }
 
+    public Account(){ super(); }
+
     public int getAccountId() {
         return accountId;
     }

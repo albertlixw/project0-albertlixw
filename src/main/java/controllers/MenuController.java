@@ -15,7 +15,7 @@ import java.util.List;
 public class MenuController {
 
     private static Scanner sc = new Scanner(System.in);
-    private static Logger log = LoggerFactory.getLogger(MenuController.class);
+//    private static Logger log = LoggerFactory.getLogger(MenuController.class);
     private UserService userService = new UserService();
     private AccountService accountService = new AccountService();
 
@@ -24,6 +24,7 @@ public class MenuController {
 
 
     public void userUI(){
+        System.out.println("Welcome to User UI");
         User user = userService.getUser();
         login(user);
         System.out.println("Dear " + user.getUsername() + ", level " + user.getLevel()+" user, What would you like to do today?");
@@ -100,7 +101,7 @@ public class MenuController {
     }
 
     public void customerUI(User user){
-        System.out.println("Enter 1 to select account id, 2 to change password, 3 to get userInfo");
+        System.out.println("Enter 1 to select account id, 2 to change password, 3 to get userInfo, 4 to create a new account for userid: " + user.getId());
         switch(sc.nextLine()){
             case "1":{
                 //TODO SELECT all users that owns this joint account.
@@ -159,6 +160,7 @@ public class MenuController {
                         List<User> userList = accountService.findAllUsersOfAccount(acc);
                         System.out.println("This account is owned by these user IDs: ");
                         printAllUsers(userList);
+                        customerUI(user);
                         break;
                     }
                     default: {
@@ -178,7 +180,13 @@ public class MenuController {
                 customerUI(user);
                 break;
             }
-
+            case "4":{
+                //make new account, attach user and account together.
+                Account acc = accountService.makeNewAccount();
+                accountService.addUserToAccount(acc, user.getId());
+                customerUI(user);
+                break;
+            }
             default: {
                 System.out.println("invalid input, please try again");
                 customerUI(user);
@@ -196,7 +204,7 @@ public class MenuController {
             String pwd = sc.nextLine();
             if(username.equals(user.getUsername())&&pwd.equals(user.getPwd())){
 
-                System.out.println("login successful! Welcome "+ user.getLevel() + " " + user.getId());
+                System.out.println("login successful! Welcome level "+ user.getLevel() + " user, UserId: " + user.getId());
                 //check account type: user? clerk? admin?
             }else{
                 System.out.println("One/both of them failed, please try again. ");

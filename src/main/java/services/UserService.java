@@ -13,30 +13,17 @@ import controllers.*;
 public class UserService {
 
 //    private AccountDAO  accountDao = new AccountDAOImpl();
-    private UserDAO userDao = new UserDAOImpl();
-    AccountService accountService = new AccountService();
-    UserController userController = new UserController();
+    private static UserDAO userDao = new UserDAOImpl();
+    private static AccountService accountService = new AccountService();
+    private static UserController userController = new UserController();
     private static Logger log = LoggerFactory.getLogger(UserService.class);
-    Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
-    private HashMap<Integer, User> userList = getUserList();
-    private List<Account> accountList = new ArrayList<>();
+    private static HashMap<Integer, User> userList = getUserList();
+    private static List<Account> accountList = new ArrayList<>();
 
 
-    public HashMap<Integer, User> getUserList() {
-//        HashMap <String, User> userList = new HashMap<>();
-//        User user = new User(0, "abc", "123", "keyword");
-//        userList.put("1", user);
-//
-//        User clerk = new User(1, "user1","123", "keyword" );
-//        userList.put("2", clerk);
-//
-//        User admin = new User(2, "admin", "234", "keyword");
-//        userList.put("0", admin);
-//        HashMap<Integer, User> userList = userDao.findAll();
-        
-        return userDao.findAll();
-    }
+
 
     public User getUser() {
         System.out.println("Welcome to user selection: Press 1 to select existing account, Press 2 to sign up;");
@@ -52,7 +39,8 @@ public class UserService {
                     try{
                         System.out.println("Please enter user id");
                         int id = sc.nextInt();
-                        user = userDao.findUser(id);
+                        sc.nextLine();         //do this to pop /n after nextInt();
+                        user = userDao.findUserById(id);
                         while(user==null){
                             System.out.println("user not found, please try again. ");
                             id = sc.nextInt();
@@ -76,6 +64,20 @@ public class UserService {
         System.out.println("invalid choice, please try again. ");
         return getUser();
     }
+    
+    public static HashMap<Integer, User> getUserList() {
+        return userDao.findAll();
+//        HashMap <String, User> userList = new HashMap<>();
+//        User user = new User(0, "abc", "123", "keyword");
+//        userList.put("1", user);
+//
+//        User clerk = new User(1, "user1","123", "keyword" );
+//        userList.put("2", clerk);
+//
+//        User admin = new User(2, "admin", "234", "keyword");
+//        userList.put("0", admin);
+//        HashMap<Integer, User> userList = userDao.findAll();
+    }
 
     public User newUserBuilder() {
         User user;
@@ -88,13 +90,17 @@ public class UserService {
             username = sc.nextLine();
         }
 
-        String pwd = null, confirmPwd = null;
-        do{
-            System.out.println("Please enter your password");
+        String pwd, confirmPwd;
+        System.out.println("Please enter your password");
+        pwd = sc.nextLine();
+        System.out.println("Please confirm your password");
+        confirmPwd = sc.nextLine();
+        while(!pwd.equals(confirmPwd)){
+            System.out.println("Password doesn't match. Please enter your password");
             pwd = sc.nextLine();
             System.out.println("Please confirm your password");
             confirmPwd = sc.nextLine();
-        }while(pwd==null||confirmPwd==null||!pwd.equals(confirmPwd));
+        }
 
         System.out.println("Please enter your keyword for retrieving password");
         String keyword = sc.nextLine();
@@ -110,8 +116,10 @@ public class UserService {
 
 
         user = new User(accessLevel, username, pwd, keyword);
+        userDao.addUser(user);
+        user = userDao.findUserByUsername(username);
         userList.put(user.getId(), user);
-        System.out.println("Account created! Please proceed to login. ");
+        System.out.println("Account created! Welcome aboard " + user.getUsername() + "! Please proceed to login. ");
         return user;
     }
 
@@ -151,13 +159,17 @@ public class UserService {
         String userid = sc.nextLine();
         User account4Change = userList.get(userid);
 
-        String pwd = "", confirmPwd = "";
-        do{
-            System.out.println("Please enter new password");
+        String pwd, confirmPwd;
+        System.out.println("Please enter your password");
+        pwd = sc.nextLine();
+        System.out.println("Please confirm your password");
+        confirmPwd = sc.nextLine();
+        while(!pwd.equals(confirmPwd)){
+            System.out.println("Password doesn't match. Please enter your password");
             pwd = sc.nextLine();
-            System.out.println("Please confirm new password");
+            System.out.println("Please confirm your password");
             confirmPwd = sc.nextLine();
-        }while(!pwd.equals(confirmPwd));
+        }
         account4Change.setPwd(pwd);
 
         userController.userInfo(account4Change);
@@ -170,13 +182,17 @@ public class UserService {
 //        int userid = user.getId();
 //        User account4Change = userList.get(userid);
 
-        String pwd = "123", confirmPwd = "";
+        String pwd, confirmPwd;
+        System.out.println("Please enter your password");
+        pwd = sc.nextLine();
+        System.out.println("Please confirm your password");
+        confirmPwd = sc.nextLine();
         while(!pwd.equals(confirmPwd)){
-            System.out.println("Please enter new password");
+            System.out.println("Password doesn't match. Please enter your password");
             pwd = sc.nextLine();
-            System.out.println("Please confirm new password");
+            System.out.println("Please confirm your password");
             confirmPwd = sc.nextLine();
-        };
+        }
         user.setPwd(pwd);
 
         userController.userInfo(user);

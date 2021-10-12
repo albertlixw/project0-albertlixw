@@ -23,14 +23,20 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        String homeString = "No home info available";
+        if(home!=null){
+            homeString = home.toString();
+        }
+        String res = "User{" +
                 "id='" + id + '\'' +
                 ", level='" + level + '\'' +
                 ", username='" + username + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", keyword='" + keyword + '\'' +
-                ", home=" + home.toString() +
+                ", home=" + homeString +
                 '}';
+
+        return res;
     }
 
     public int getId() {

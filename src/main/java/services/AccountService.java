@@ -42,20 +42,25 @@ public class AccountService {
               return approve();
        }
 
-       public void makeNewAccount(){
-              System.out.println("Please enter your balance");
+       public Account makeNewAccount(){
 
+              System.out.println("Please enter your balance");
               int balance = Integer.parseInt(sc.nextLine());
+
               while(balance < 0||balance>1e50){
                      System.out.println("Balance can't be negative or greater than 1e50");
                      balance = Integer.parseInt(sc.nextLine());
               }
+
               //clerk approve
               System.out.println("Needs approval from admin/clerk");
 
               while(!approve()){
                      System.out.println("Your application got denied. Please try again, or come another day. ");
               }
+              Account acc = new Account(balance);
+              accountDao.addAccount(acc);
+              return acc;
        }
 
        public List<User> findAllUsersOfAccount(Account acc) {
