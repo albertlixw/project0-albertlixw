@@ -1,50 +1,25 @@
 package services;
 
+import controllers.MenuController;
+import controllers.UserController;
 import daos.*;
 import models.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import models.User;
 
 import java.util.*;
 
 public class AccountService {
-       private static AccountDAO accountDao = new AccountDAOImpl();
-       private Scanner sc = new Scanner(System.in);
-
        private static UserDAO userDao = new UserDAOImpl();
+       private static AccountDAO accountDao = new AccountDAOImpl();
+       private static UserController userController = new UserController();
+
+       private Scanner sc = new Scanner(System.in);
+       private static Logger log = LoggerFactory.getLogger(MenuController.class);
+
        private static HashMap<Integer, User> userList = userDao.findAll();
        private static HashMap<Integer, Account> accountList = accountDao.findAll();
-       public boolean approve(){
-              System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk User id");
-
-              User authorized = userList.get(Integer.parseInt(sc.nextLine()));
-              while(authorized==null){
-                     System.out.println("Userid not found, please try again. ");
-                     authorized = userList.get(sc.nextLine());
-              }
-              while(authorized.getLevel()<1){
-                     System.out.println("Customers cannot approve applications. Please try again. ");
-                     authorized = userList.get(sc.nextLine());
-              }
-              System.out.println("Dear admin/clerk, please enter your password");
-              String pwd = sc.nextLine();
-              while(!authorized.getPwd().equals(pwd)){
-                     System.out.println("password incorrect, please try again");
-                     pwd = sc.nextLine();
-              }
-
-              System.out.println("login successful! Do you approve this action? y/n");
-              String input = sc.nextLine();
-              if(input.equals("y")){
-                     System.out.println("approved");
-                     return true;
-              }else if(input.equals("n")){
-                     System.out.println("denied");
-                     return false;
-              }
-              System.out.println("Unexpected input detected. Please try again. ");
-              return approve();
-       }
-
 
        public Account makeNewAccount(int addedUserId){
 
@@ -60,7 +35,7 @@ public class AccountService {
               //clerk approve
               System.out.println("Needs approval from admin/clerk");
 
-              while(!approve()){
+              while(!userController.approve()){
                      System.out.println("Your application got denied. Please try again, or come another day. ");
               }
               Account acc = new Account(balance);
@@ -68,8 +43,9 @@ public class AccountService {
               //cuz account without user might as well not exist. 
               //This is fine since I know it's single thread. 
               accountList = accountDao.findAll();
-              int accid = accountList.size();
+              int accid = accountList.get(accountList.size()-1).getAccountId();
               accountDao.addUserToAccount(accid, addedUserId);
+              log.info("new account made with account id: " + accid);
               return acc;
        }
 
@@ -101,6 +77,7 @@ public class AccountService {
               }
               account.setBalance(account.getBalance() + amount);
               accountDao.updateAccount(account);
+              System.out.println("Deposit successful. ");
        }
 
        public void withdraw(Account account, double amount){
@@ -111,24 +88,28 @@ public class AccountService {
               }
               account.setBalance(account.getBalance() - amount);
               accountDao.updateAccount(account);
+              System.out.println("Withdraw successful. ");
+
        }
        public void transfer(Account acc, int receivingAccountId, double amount) {
               withdraw(acc, amount);
               deposit(accountList.get(receivingAccountId), amount);
               System.out.println("Transfer completed. ");
+              log.info("Account id: " + acc.getAccountId() + " just transferred ");
        }
        public void accountInfo(Account acc) {
               System.out.println(acc.toString());
        }
 
-       public void deleteAccount(){
-              //TODO: rewrite deleteDAOs SQL
-              boolean bool = approve();
+       public void deleteAccount(User user){
+              boolean bool = userController.approve();
               if(bool) {
                      System.out.println("Which account id do you want to delete?");
                      int id = Integer.parseInt(sc.nextLine());
-                     userDao.deleteUser(id);
+                     accountDao.deleteAccount(id);
                      userList.remove(id);
+                     System.out.println("account id: " + id + " deleted successfully");
+
               }else{
                      System.out.println("failed to delete account");
               }

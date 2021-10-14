@@ -14,14 +14,18 @@ public class UserService {
 
 //    private AccountDAO  accountDao = new AccountDAOImpl();
     private static UserDAO userDao = new UserDAOImpl();
-    private static AccountService accountService = new AccountService();
+
     private static UserController userController = new UserController();
+    private static MenuController menuController = new MenuController();
+
+    private static AccountService accountService = new AccountService();
+
     private static Scanner sc = new Scanner(System.in);
 
     private static HashMap<Integer, User> userList = getUserList();
 //    private static HashMap<Integer, Account> accountList = accountService.findAllAccount();
-    private static MenuController menuController = new MenuController();
 
+    private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
 
 
@@ -42,7 +46,18 @@ public class UserService {
     }
 
 
-
+    public void deleteUser(User user){
+        boolean bool = userController.approve();
+        if(bool) {
+            System.out.println("Which user id do you want to delete?");
+            int id = Integer.parseInt(sc.nextLine());
+            userDao.deleteUser(id);
+            userList.remove(id);
+            System.out.println("userid: " + id + " deleted successfully");
+        }else{
+            System.out.println("failed to delete account");
+        }
+    }
 
 
 

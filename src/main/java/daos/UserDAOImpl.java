@@ -75,9 +75,17 @@ public class UserDAOImpl implements UserDAO{
         return null;
     }
 
-    //TODO delete user and account
     @Override
     public boolean deleteUser(int id) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM users WHERE userid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

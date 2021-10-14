@@ -3,8 +3,7 @@ package controllers;
 import models.*;
 import controllers.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import services.AccountService;
 import services.UserService;
@@ -15,13 +14,13 @@ import java.util.List;
 public class MenuController {
 
     private static Scanner sc = new Scanner(System.in);
-//    private static Logger log = LoggerFactory.getLogger(MenuController.class);
     private UserService userService = new UserService();
     private AccountService accountService = new AccountService();
 
+    private AccountController accountController = new AccountController();
     private UserController userController = new UserController();
 
-    HashMap<Integer, User> userList = userService.getUserList();
+//    HashMap<Integer, User> userList = userService.getUserList();
 
     public void userUI(){
         System.out.println("Welcome to User UI");
@@ -72,11 +71,13 @@ public class MenuController {
 
     private void adminUI(User user) {
         System.out.println("Dear admin. What would you like to do today? ");
-        System.out.println("Enter: 0 - logout; " +
-                "1 - assign roles?; " +
-                "2 - Edit any USER and ACCOUNT; " +
-                "3 - Delete a User;" +
-                "4 - Delete an Account; ");
+        System.out.println("Enter: 0 - go to clerk UI; " +
+                "1 - Edit user roles; " +
+                "2 - Deposit from any account; " +
+                "3 - Withdraw from any account; " +
+                "4 - transfer from any account to another account; " +
+                "5 - Delete a User; " +
+                "6 - Delete an Account; ");
         
         String input = sc.nextLine();
         switch(input){
@@ -90,6 +91,33 @@ public class MenuController {
                 break;
 
             }
+            case "2": {
+                accountController.depositAdmin(user);
+                adminUI(user);
+                break;
+            }
+            case "3": {
+                accountController.withdrawAdmin(user);
+                adminUI(user);
+                break;
+            }
+            case "4": {
+                accountController.transferAdmin(user);
+                adminUI(user);
+                break;
+            }
+            case "5": {
+                userService.deleteUser(user);
+                adminUI(user);
+                break;
+            }
+            case "6": {
+                accountService.deleteAccount(user);
+                adminUI(user);
+                break;
+            }
+
+
         }
     }
 
@@ -126,7 +154,7 @@ public class MenuController {
                 }
                 Account acc = accountList.get(accountId);
 
-                System.out.println("Enter 1 for deposit, 2 for withdrawal, 3 for account info, " +
+                System.out.println("Enter 1 for deposit, 2 for withdraw, 3 for account info, " +
                         "4 to transfer to another account, 5 to add another user for this account, " +
                         "6 to List all users that owns this account. ");
                 String input = sc.nextLine();
