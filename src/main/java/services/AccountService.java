@@ -99,6 +99,7 @@ public class AccountService {
                      amount = sc.nextDouble();
               }
               account.setBalance(account.getBalance() + amount);
+              accountDao.updateAccount(account);
        }
 
        public void withdraw(Account account, double amount){
@@ -107,11 +108,26 @@ public class AccountService {
                      amount = sc.nextDouble();
               }
               account.setBalance(account.getBalance() - amount);
+              accountDao.updateAccount(account);
        }
-
+       public void transfer(Account acc, int receivingAccountId, double amount) {
+              withdraw(acc, amount);
+              deposit(accountList.get(receivingAccountId), amount);
+       }
        public void accountInfo(Account acc) {
               System.out.println(acc.toString());
        }
 
-
+       public void deleteAccount(){
+              //TODO: rewrite deleteDAOs SQL
+              boolean bool = approve();
+              if(bool) {
+                     System.out.println("Which account id do you want to delete?");
+                     int id = Integer.parseInt(sc.nextLine());
+                     userDao.deleteUser(id);
+                     userList.remove(id);
+              }else{
+                     System.out.println("failed to delete account");
+              }
+       }
 }

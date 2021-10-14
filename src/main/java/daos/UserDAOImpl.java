@@ -74,6 +74,13 @@ public class UserDAOImpl implements UserDAO{
         }
         return null;
     }
+
+    //TODO delete user and account
+    @Override
+    public boolean deleteUser(int id) {
+        return false;
+    }
+
     @Override
     public User findUserById(int id) {
         try(Connection conn = ConnectionUtil.getConnection()){

@@ -25,7 +25,7 @@ public class MenuController {
 
     public void userUI(){
         System.out.println("Welcome to User UI");
-        User user = userService.getUser();
+        User user = userController.getUser();
         login(user);
         System.out.println("Dear " + user.getUsername() + ", level " + user.getLevel()+" user, What would you like to do today?");
         switch(user.getLevel()){
@@ -71,7 +71,7 @@ public class MenuController {
             case "2":{
                 //TODO: change account info
                 userService.getAnyUserInfo(user);
-                userService.changePwd(user);
+                userController.changePwd(user);
                 break;
             }
         }
@@ -110,7 +110,7 @@ public class MenuController {
                 break;
             }
             case "1":{
-                //TODO SELECT all users that owns this joint account.
+
                 HashMap<Integer, Account> accountList = accountService.findAllByUser(user);
                 System.out.println("Accounts under current user: " );
                 printAllAccounts(accountList);
@@ -159,7 +159,7 @@ public class MenuController {
 //                                Account receivingAccount = accountService.findById(receivingAccountId);
                         System.out.println("How much money do you wanna transfer? ");
                         double amount = sc.nextDouble();
-                        userService.transfer(acc, receivingAccountId, amount);
+                        accountService.transfer(acc, receivingAccountId, amount);
                         customerUI(user);
                         break;
                     }
@@ -187,7 +187,7 @@ public class MenuController {
                 }
             }
             case "2":{
-                userService.changePwd(user);
+                userController.changePwd(user);
                 customerUI(user);
                 break;
             }
