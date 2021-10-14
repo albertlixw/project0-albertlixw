@@ -13,20 +13,20 @@ public class AccountDAOImpl implements AccountDAO{
     private final HomeDAO homeDao = new HomeDAOImpl();
 //    private Scanner sc = new Scanner(System.in);
     @Override
-    public List<Account> findAll() {
+    public HashMap<Integer, Account> findAll() {
 
         try(Connection conn = ConnectionUtil.getConnection()){
             String sql = "SELECT * FROM accounts;";
             Statement statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(sql);
-            List<Account> accountList = new ArrayList<>();
+            HashMap<Integer, Account> accountList = new HashMap<>();
 
             while(result.next()){
                 Account acc = new Account(0);
                 acc.setAccountId(result.getInt("accountid"));
                 acc.setBalance(result.getDouble("balance"));
-                accountList.add(acc);
+                accountList.put(acc.getAccountId(), acc);
             }
             return accountList;
         }catch (SQLException e){
@@ -61,12 +61,12 @@ public class AccountDAOImpl implements AccountDAO{
     @Override
     public boolean updateAccount(Account account) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "UPDATE account SET balance = ? WHERE accountid = ?;";
+            String sql = "UPDATE accounts SET balance = ? WHERE accountid = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setDouble(1, account.getBalance());
             statement.setInt(2, account.getAccountId());
-            statement.executeQuery();
+            statement.execute();
 
             return true;
 
@@ -139,7 +139,7 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public List<User> findAllUsersOfAccount(Account account) {
+    public HashMap<Integer, User> findAllUsersOfAccount(Account account) {
         try(Connection conn = ConnectionUtil.getConnection()) {
             String sql = "SELECT * FROM users u \n" +
                     "JOIN map_users_accounts m ON u.userid = m.userid\n" +
@@ -149,7 +149,7 @@ public class AccountDAOImpl implements AccountDAO{
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, account.getAccountId());
             ResultSet result = statement.executeQuery();
-            List<User> userList = new ArrayList<>();
+            HashMap<Integer, User> userList = new HashMap<>();
 
             while(result.next()){
                 User user = new User();
@@ -158,7 +158,7 @@ public class AccountDAOImpl implements AccountDAO{
                 user.setPwd(result.getString("pwd"));
                 user.setKeyword(result.getString("keyword"));
                 user.setLevel(result.getInt("user_level"));
-                userList.add(user);
+                userList.put(user.getId(), user);
                 String homeName = result.getString("home");
                 if(homeName!=null){
                     Home home = homeDao.findByName(homeName);

@@ -12,7 +12,7 @@ public class AccountService {
 
        private static UserDAO userDao = new UserDAOImpl();
        private static HashMap<Integer, User> userList = userDao.findAll();
-       private static List<Account> accountList = accountDao.findAll();
+       private static HashMap<Integer, Account> accountList = accountDao.findAll();
        public boolean approve(){
               System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk User id");
 
@@ -73,11 +73,11 @@ public class AccountService {
               return acc;
        }
 
-       public List<User> findAllUsersOfAccount(Account acc) {
+       public HashMap<Integer, User> findAllUsersOfAccount(Account acc) {
               return accountDao.findAllUsersOfAccount(acc);
        }
 
-       public List<Account> findAllAccount(){
+       public HashMap<Integer, Account> findAllAccount(){
              return accountDao.findAll(); 
        }
 
@@ -97,6 +97,7 @@ public class AccountService {
               while(amount < 0){
                      System.out.println("invalid input, please try again. ");
                      amount = sc.nextDouble();
+                     sc.nextLine();
               }
               account.setBalance(account.getBalance() + amount);
               accountDao.updateAccount(account);
@@ -106,6 +107,7 @@ public class AccountService {
               while(amount > account.getBalance() || amount < 0){
                      System.out.println("insufficient balance, please try again. ");
                      amount = sc.nextDouble();
+                     sc.nextLine();
               }
               account.setBalance(account.getBalance() - amount);
               accountDao.updateAccount(account);
@@ -113,6 +115,7 @@ public class AccountService {
        public void transfer(Account acc, int receivingAccountId, double amount) {
               withdraw(acc, amount);
               deposit(accountList.get(receivingAccountId), amount);
+              System.out.println("Transfer completed. ");
        }
        public void accountInfo(Account acc) {
               System.out.println(acc.toString());

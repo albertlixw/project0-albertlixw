@@ -97,9 +97,9 @@ public class MenuController {
         }
     }
 
-    public void printAllUsers(List<User> list){
-        for(User user : list){
-            System.out.println(user.getId());
+    public void printAllUsers(HashMap<Integer,User> list){
+        for(Integer i : list.keySet()){
+            System.out.println(list.get(i).toString());
         }
     }
 
@@ -133,6 +133,8 @@ public class MenuController {
                     case "1" :{
                         System.out.println("How much would you like to deposit?");
                         double amount = sc.nextDouble();
+                        sc.nextLine();
+
                         accountService.deposit(acc, amount);
                         accountService.accountInfo(acc);
                         customerUI(user);
@@ -141,6 +143,8 @@ public class MenuController {
                     case "2" :{
                         System.out.println("How much would you like to withdraw?");
                         double amount = sc.nextDouble();
+                        sc.nextLine();
+
                         accountService.withdraw(acc, amount);
                         accountService.accountInfo(acc);
                         customerUI(user);
@@ -156,9 +160,13 @@ public class MenuController {
 
                         System.out.println("Which account id do you wanna transfer to?");
                         int receivingAccountId = sc.nextInt();
+                        sc.nextLine();
+
 //                                Account receivingAccount = accountService.findById(receivingAccountId);
                         System.out.println("How much money do you wanna transfer? ");
                         double amount = sc.nextDouble();
+                        sc.nextLine();
+
                         accountService.transfer(acc, receivingAccountId, amount);
                         customerUI(user);
                         break;
@@ -173,7 +181,7 @@ public class MenuController {
                         break;
                     }
                     case "6":{
-                        List<User> userList = accountService.findAllUsersOfAccount(acc);
+                        HashMap<Integer, User> userList = accountService.findAllUsersOfAccount(acc);
                         System.out.println("This account is owned by these user IDs: ");
                         printAllUsers(userList);
                         customerUI(user);
@@ -185,6 +193,7 @@ public class MenuController {
                         break;
                     }
                 }
+                break;
             }
             case "2":{
                 userController.changePwd(user);
