@@ -3,11 +3,13 @@ package controllers;
 import daos.UserDAO;
 import daos.UserDAOImpl;
 import models.User;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.UserService;
 
 //import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.*;
 
 public class UserController {
@@ -20,27 +22,42 @@ public class UserController {
 
     private static Logger log = LoggerFactory.getLogger(UserService.class);
 
+
+    public void changePwdClerk(User user){
+        System.out.println("Which user id would you like to change password?");
+        int userid = Integer.parseInt(sc.nextLine());
+        User account4Change = userList.get(userid);
+        if(user.getLevel()>0){
+            changePwd(account4Change);
+        }
+    }
     public void changePwd(User user){
 //        System.out.println("Which user id would you like to change password?");
 //        int userid = user.getId();
 //        User account4Change = userList.get(userid);
+        System.out.println("Welcome to password change UI, Please enter keyword to proceed: ");
+        String input = sc.nextLine();
 
-        String pwd, confirmPwd;
-        System.out.println("Please enter your password");
-        pwd = sc.nextLine();
-        System.out.println("Please confirm your password");
-        confirmPwd = sc.nextLine();
-        while(!pwd.equals(confirmPwd)){
-            System.out.println("Password doesn't match. Please enter your password");
+        if(input.equals(user.getKeyword())){
+            String pwd, confirmPwd;
+            System.out.println("Please enter your password");
             pwd = sc.nextLine();
             System.out.println("Please confirm your password");
             confirmPwd = sc.nextLine();
-        }
-        user.setPwd(pwd);
+            while(!pwd.equals(confirmPwd)){
+                System.out.println("Password doesn't match. Please enter your password");
+                pwd = sc.nextLine();
+                System.out.println("Please confirm your password");
+                confirmPwd = sc.nextLine();
+            }
+            user.setPwd(pwd);
 
-        userInfo(user);
-        userDao.updateUser(user);
-        System.out.println("pwd change successful!");
+            userInfo(user);
+            userDao.updateUser(user);
+            System.out.println("pwd change successful!");
+        }else{
+            System.out.println("Keyword doesn't match with our records. Please try again. ");
+        }
     }
 
 
@@ -97,16 +114,21 @@ public class UserController {
                     System.out.println("failed to retrieve account, please try again. ");
                     return getUser();
                 }
-
             } case "2" :{
-                user = newUserBuilder();
-                return user;
+                try{
+                    user = newUserBuilder();
+                    return user;
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }return getUser();
             }
         }
         System.out.println("invalid choice, please try again. ");
         return getUser();
     }
-    public User newUserBuilder() {
+    public User newUserBuilder() throws SQLException {
+
+
         User user;
 
         System.out.println("Please enter your unique username");
@@ -141,7 +163,6 @@ public class UserController {
             accessLevel = Integer.parseInt(sc.nextLine());
 //            sc.nextLine();
         }
-
 
 
         user = new User(accessLevel, username, pwd, keyword);

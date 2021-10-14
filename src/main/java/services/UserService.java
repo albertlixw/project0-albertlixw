@@ -19,13 +19,14 @@ public class UserService {
     private static Scanner sc = new Scanner(System.in);
 
     private static HashMap<Integer, User> userList = getUserList();
-    private static List<Account> accountList = new ArrayList<>();
+//    private static HashMap<Integer, Account> accountList = accountService.findAllAccount();
+    private static MenuController menuController = new MenuController();
 
 
 
 
 
-    
+
     public static HashMap<Integer, User> getUserList() {
         return userDao.findAll();
 //        HashMap <String, User> userList = new HashMap<>();
@@ -67,34 +68,16 @@ public class UserService {
             System.out.println("Unauthorized action.");
             return;
         }
-        System.out.println("Which account id would you like to check info?");
-        String checkAccountId = sc.nextLine();
-        userController.userInfo(userList.get(checkAccountId));
-        System.out.println("Account Keyword: " + userList.get(checkAccountId).getKeyword());
+        menuController.printAllUsers(userList);
+        System.out.println("Which user id would you like to check info?");
+        int checkUserId = Integer.parseInt(sc.nextLine());
+        User selectedUser = userList.get(checkUserId);
+        userController.userInfo(selectedUser);
+        HashMap<Integer, Account> accountsOfUser = accountService.findAllByUser(selectedUser);
+        menuController.printAllAccounts(accountsOfUser);
     }
 
-    public void changePwdClerk(User user){
-        System.out.println("Which user id would you like to change password?");
-        String userid = sc.nextLine();
-        User account4Change = userList.get(userid);
 
-        String pwd, confirmPwd;
-        System.out.println("Please enter your password");
-        pwd = sc.nextLine();
-        System.out.println("Please confirm your password");
-        confirmPwd = sc.nextLine();
-        while(!pwd.equals(confirmPwd)){
-            System.out.println("Password doesn't match. Please enter your password");
-            pwd = sc.nextLine();
-            System.out.println("Please confirm your password");
-            confirmPwd = sc.nextLine();
-        }
-        account4Change.setPwd(pwd);
-
-        userController.userInfo(account4Change);
-        userDao.updateUser(account4Change);
-        System.out.println("pwd change successful!");
-    }
 
 
 

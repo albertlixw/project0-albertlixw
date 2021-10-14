@@ -21,13 +21,13 @@ public class MenuController {
 
     private UserController userController = new UserController();
 
-
+    HashMap<Integer, User> userList = userService.getUserList();
 
     public void userUI(){
         System.out.println("Welcome to User UI");
         User user = userController.getUser();
         login(user);
-        System.out.println("Dear " + user.getUsername() + ", level " + user.getLevel()+" user, What would you like to do today?");
+        System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
         switch(user.getLevel()){
             case 2:{
                 adminUI(user);
@@ -47,43 +47,49 @@ public class MenuController {
                 break;
             }
         }
-
-            //service methods logging every action.
-        //withdraw and deposits happen at time?
-        //set level in config file, appendix.
-        //definitely set level to info.
-        // when level is higher than warn/error
-        //print it out?
-        //warn when error?
-
     }
 
     private void clerkUI(User user) {
-        System.out.println("Dear clerk: What would you like to do today? 0. Logout. 1. Check any user's info. 2. Change password of an account");
+        System.out.println("Dear clerk: What would you like to do today? 0. go to customer UI. 1. Check any user's info. 2. Change password of an account. ");
         switch(sc.nextLine()){
             case "0":{
                 break;
             }
             case "1":{
+//                userList = userService.getUserList();
                 userService.getAnyUserInfo(user);
+                clerkUI(user);
                 break;
             }
             case "2":{
-                //TODO: change account info
                 userService.getAnyUserInfo(user);
-                userController.changePwd(user);
+                userController.changePwdClerk(user);
+                clerkUI(user);
                 break;
             }
         }
     }
 
     private void adminUI(User user) {
-        System.out.println("Are you here to assign roles? y/n");
-        if(sc.nextLine().equals("y")){
-            userService.assignRole(user);
-        }else{
-            //TODO
-            //Edit USER and ACCOUNT INFO.
+        System.out.println("Dear admin. What would you like to do today? ");
+        System.out.println("Enter: 0 - logout; " +
+                "1 - assign roles?; " +
+                "2 - Edit any USER and ACCOUNT; " +
+                "3 - Delete a User;" +
+                "4 - Delete an Account; ");
+        
+        String input = sc.nextLine();
+        switch(input){
+            case "0":{
+                break;
+            }
+            case "1":{
+
+                userService.assignRole(user);
+                adminUI(user);
+                break;
+
+            }
         }
     }
 
@@ -91,20 +97,15 @@ public class MenuController {
     //return userobj
     //switch role to determine which menu to print
 
-    public void printAllAccounts(HashMap<Integer, Account> list){
-        for(Integer i : list.keySet()){
-            System.out.println(list.get(i).toString());
-        }
-    }
 
-    public void printAllUsers(HashMap<Integer,User> list){
-        for(Integer i : list.keySet()){
-            System.out.println(list.get(i).toString());
-        }
-    }
 
     public void customerUI(User user){
-        System.out.println("Enter 0 to logout；1：select account id; 2: change password; 3: get userInfo; 4: create a new account for userid: " + user.getId());
+        System.out.println("Welcome, dear customer. " +
+                "Enter 0 to logout；" +
+                "1：select account id; " +
+                "2: change password; " +
+                "3: get userInfo; " +
+                "4: create a new account for userid: " + user.getId());
         switch(sc.nextLine()){
             case "0":{
                 break;
@@ -229,11 +230,24 @@ public class MenuController {
             String pwd = sc.nextLine();
             if(username.equals(user.getUsername())&&pwd.equals(user.getPwd())){
 
-                System.out.println("login successful! Welcome level "+ user.getLevel() + " user, UserId: " + user.getId());
+                System.out.println("login successful! Welcome back, level "+ user.getLevel() + " user, UserId: " + user.getId());
                 //check account type: user? clerk? admin?
             }else{
                 System.out.println("One/both of them failed, please try again. ");
                 userUI();
             }
+    }
+
+
+    public void printAllAccounts(HashMap<Integer, Account> list){
+        for(Integer i : list.keySet()){
+            System.out.println(list.get(i).toString());
+        }
+    }
+
+    public void printAllUsers(HashMap<Integer,User> list){
+        for(Integer i : list.keySet()){
+            System.out.println(list.get(i).toString());
+        }
     }
 }
