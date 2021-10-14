@@ -48,7 +48,7 @@ E.g.
     * All basic validation should be done, such as trying to input negative amounts, overdrawing from accounts etc. √
 *	Employees of the bank should be able to view all of their customers information. This includes:
     * Account information  √
-    * Account balances 
+    * Account balances  √
     * Personal information  √
 *	Employees should be able to approve/deny open applications for accounts √
 *	Bank admins should be able to view and edit all accounts. This includes:
