@@ -59,8 +59,11 @@ public class MenuController {
     }
 
     private void clerkUI(User user) {
-        System.out.println("Dear clerk: What would you like to do today? 1. Check any user's info. 2. Change password of an account");
+        System.out.println("Dear clerk: What would you like to do today? 0. Logout. 1. Check any user's info. 2. Change password of an account");
         switch(sc.nextLine()){
+            case "0":{
+                break;
+            }
             case "1":{
                 userService.getAnyUserInfo(user);
                 break;
@@ -88,9 +91,9 @@ public class MenuController {
     //return userobj
     //switch role to determine which menu to print
 
-    public void printAllAccounts(List<Account> list){
-        for(Account ac : list){
-            System.out.println(ac.getAccountId());
+    public void printAllAccounts(HashMap<Integer, Account> list){
+        for(Integer i : list.keySet()){
+            System.out.println(list.get(i).toString());
         }
     }
 
@@ -101,16 +104,27 @@ public class MenuController {
     }
 
     public void customerUI(User user){
-        System.out.println("Enter 1 to select account id, 2 to change password, 3 to get userInfo, 4 to create a new account for userid: " + user.getId());
+        System.out.println("Enter 0 to logout；1：select account id; 2: change password; 3: get userInfo; 4: create a new account for userid: " + user.getId());
         switch(sc.nextLine()){
+            case "0":{
+                break;
+            }
             case "1":{
                 //TODO SELECT all users that owns this joint account.
-                List<Account> accountList = accountService.findAllByUser(user);
+                HashMap<Integer, Account> accountList = accountService.findAllByUser(user);
                 System.out.println("Accounts under current user: " );
                 printAllAccounts(accountList);
                 System.out.println("Please select an account id");
                 int accountId = sc.nextInt();
-                Account acc = accountService.findById(accountId);
+                sc.nextLine();
+
+                while(!accountList.containsKey(accountId))  {
+                    System.out.println("You don't seem to own this account, please select from the list. ");
+                    accountId = sc.nextInt();
+                    sc.nextLine();
+                }
+                Account acc = accountList.get(accountId);
+
                 System.out.println("Enter 1 for deposit, 2 for withdrawal, 3 for account info, " +
                         "4 to transfer to another account, 5 to add another user for this account, " +
                         "6 to List all users that owns this account. ");
@@ -152,7 +166,9 @@ public class MenuController {
                     case "5" : {
                         System.out.println("Which user would you like to add to this account? ");
                         int addedUserId = sc.nextInt();
-                        accountService.addUserToAccount(acc, addedUserId);
+                        sc.nextLine();
+//                        System.out.println(acc.getAccountId());
+                        accountService.addUserToAccount(acc.getAccountId(), addedUserId);
                         customerUI(user);
                         break;
                     }
@@ -181,9 +197,9 @@ public class MenuController {
                 break;
             }
             case "4":{
-                //make new account, attach user and account together.
-                Account acc = accountService.makeNewAccount();
-                accountService.addUserToAccount(acc, user.getId());
+                //make new account, attach user to account together.
+                Account acc = accountService.makeNewAccount(user.getId());
+//                accountService.addUserToAccount(acc, user.getId());
                 customerUI(user);
                 break;
             }

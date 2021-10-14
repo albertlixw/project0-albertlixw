@@ -10,8 +10,8 @@ import java.util.*;
 
 
 public class AccountDAOImpl implements AccountDAO{
-    private HomeDAO homeDao = new HomeDAOImpl();
-    private Scanner sc = new Scanner(System.in);
+    private final HomeDAO homeDao = new HomeDAOImpl();
+//    private Scanner sc = new Scanner(System.in);
     @Override
     public List<Account> findAll() {
 
@@ -42,7 +42,7 @@ public class AccountDAOImpl implements AccountDAO{
             String sql = "SELECT * FROM accounts WHERE accountid = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, accountId + "");
+            statement.setInt(1, accountId);
             ResultSet result = statement.executeQuery();
             Account acc = new Account(0);
 
@@ -80,11 +80,11 @@ public class AccountDAOImpl implements AccountDAO{
     @Override
     public boolean addAccount(Account account) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO accounts(balance) VALUE ?;";
-
+            System.out.println(account.getBalance());
+            String sql = "INSERT INTO accounts(balance) VALUES (?);";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setDouble(1, account.getBalance());
-            statement.executeQuery();
+            statement.execute();
 
             return true;
 
@@ -96,14 +96,14 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public boolean addUserToAccount(Account account, int addedUserId) {
+    public boolean addUserToAccount(int accountid, int addedUserId) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = " INSERT INTO map_users_accounts (userid, accountid)\n" +
-                    " \tVALUES (?, ?);";
+            String sql = "INSERT INTO map_users_accounts (userid, accountid) VALUES (?, ?);";
 
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, addedUserId + "");
-            statement.setString(2, account.getAccountId() + "");
+            statement.setInt(1, addedUserId);
+            statement.setInt(2, accountid);
+            statement.execute();
 
             return true;
         }   catch (SQLException e){
@@ -113,24 +113,24 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public List<Account> findAllByUser(User user) {
+    public HashMap<Integer, Account> findAllByUser(User user) {
         try(Connection conn = ConnectionUtil.getConnection()) {
             String sql = "SELECT * FROM accounts a \n" +
                     "JOIN map_users_accounts m ON a.accountid = m.accountid\n" +
                     "JOIN users u \n" +
                     "ON u.userid = m.userid\n" +
-                    "WHERE u.userid =?;\n";
+                    "WHERE u.userid = ?;\n";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, ""+user.getId());
+            statement.setInt(1, user.getId());
             ResultSet result = statement.executeQuery();
-            List<Account> accountList = new ArrayList<>();
+            HashMap<Integer, Account> accountList = new HashMap<>();
 
             while(result.next()){
                 Account acc = new Account(0);
                 acc.setAccountId(result.getInt("accountid"));
                 acc.setBalance(result.getDouble("balance"));
-                accountList.add(acc);
-            }
+                accountList.put(acc.getAccountId(), acc);
+            }        
             return accountList;
         }catch(SQLException e){
             e.printStackTrace();
@@ -147,7 +147,7 @@ public class AccountDAOImpl implements AccountDAO{
                     "ON a.accountid = m.accountid\n" +
                     "WHERE a.accountid = ?;\n";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, account.getAccountId()+"");
+            statement.setInt(1, account.getAccountId());
             ResultSet result = statement.executeQuery();
             List<User> userList = new ArrayList<>();
 
@@ -159,7 +159,7 @@ public class AccountDAOImpl implements AccountDAO{
                 user.setKeyword(result.getString("keyword"));
                 user.setLevel(result.getInt("user_level"));
                 userList.add(user);
-                String homeName = result.getString("home_name");
+                String homeName = result.getString("home");
                 if(homeName!=null){
                     Home home = homeDao.findByName(homeName);
                     user.setHome(home);
