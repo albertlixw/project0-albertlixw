@@ -15,7 +15,9 @@ public interface AccountDAO {
 
     HashMap<Integer, Account> findAllByUser(User user);
 
-      public HashMap<Integer, User> findAllUsersOfAccount(Account acc);
+    public HashMap<Integer, User> findAllUsersOfAccount(Account acc);
+
+    public boolean deleteMapping(int accountId);
 
     public boolean deleteAccount(int id);
 }

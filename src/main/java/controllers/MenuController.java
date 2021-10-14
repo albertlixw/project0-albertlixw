@@ -56,12 +56,12 @@ public class MenuController {
             }
             case "1":{
 //                userList = userService.getUserList();
-                userService.getAnyUserInfo(user);
+                userController.getAnyUserInfo(user);
                 clerkUI(user);
                 break;
             }
             case "2":{
-                userService.getAnyUserInfo(user);
+                userController.getAnyUserInfo(user);
                 userController.changePwdClerk(user);
                 clerkUI(user);
                 break;
@@ -107,12 +107,12 @@ public class MenuController {
                 break;
             }
             case "5": {
-                userService.deleteUser(user);
+                userController.deleteUser(user.getId());
                 adminUI(user);
                 break;
             }
             case "6": {
-                accountService.deleteAccount(user);
+                accountController.deleteAccount();
                 adminUI(user);
                 break;
             }
@@ -124,9 +124,7 @@ public class MenuController {
     //check service method to know what role user have
     //return userobj
     //switch role to determine which menu to print
-
-
-
+    
     public void customerUI(User user){
         System.out.println("Welcome, dear customer. " +
                 "Enter 0 to logout；" +
@@ -236,7 +234,7 @@ public class MenuController {
             }
             case "4":{
                 //make new account, attach user to account together.
-                Account acc = accountService.makeNewAccount(user.getId());
+                Account acc = accountController.makeNewAccount(user.getId());
 //                accountService.addUserToAccount(acc, user.getId());
                 customerUI(user);
                 break;
@@ -256,7 +254,8 @@ public class MenuController {
             String username = sc.nextLine();
             System.out.println("please enter the pwd");
             String pwd = sc.nextLine();
-            if(username.equals(user.getUsername())&&pwd.equals(user.getPwd())){
+            
+            if(userService.login(user, username, pwd)){
 
                 System.out.println("login successful! Welcome back, level "+ user.getLevel() + " user, UserId: " + user.getId());
                 //check account type: user? clerk? admin?

@@ -1,8 +1,11 @@
 package daos;
 
+import controllers.MenuController;
 import models.Account;
 import models.Home;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.ConnectionUtil;
 
 import java.sql.*;
@@ -11,7 +14,9 @@ import java.util.*;
 
 public class AccountDAOImpl implements AccountDAO{
     private final HomeDAO homeDao = new HomeDAOImpl();
-//    private Scanner sc = new Scanner(System.in);
+    private static Logger log = LoggerFactory.getLogger(MenuController.class);
+
+    //    private Scanner sc = new Scanner(System.in);
     @Override
     public HashMap<Integer, Account> findAll() {
 
@@ -173,14 +178,32 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
+    public boolean deleteMapping(int accountId) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM map_users_accounts WHERE accountid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    @Override
     public boolean deleteAccount(int id) {
         try(Connection conn = ConnectionUtil.getConnection()){
             String sql = "DELETE FROM accounts WHERE accountid = ?;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
+            log.info("Deleted account id: " + id);
             return true;
         } catch (SQLException e) {
+            log.warn("failed deleting account id: " + id);
+            log.warn(e.getMessage());
             e.printStackTrace();
         }
         return false;

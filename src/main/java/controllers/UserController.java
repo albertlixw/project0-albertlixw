@@ -2,10 +2,12 @@ package controllers;
 
 import daos.UserDAO;
 import daos.UserDAOImpl;
+import models.Account;
 import models.User;
 import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.AccountService;
 import services.UserService;
 
 //import java.util.HashMap;
@@ -15,10 +17,12 @@ import java.util.*;
 public class UserController {
 
     private static UserService userService = new UserService();
+    private static MenuController menuController = new MenuController();
+    private static AccountService accountService = new AccountService();
     private UserDAO userDao = new UserDAOImpl();
 
     private Scanner sc = new Scanner(System.in);
-    private static HashMap<Integer, User> userList = userService.getUserList();
+//    private static HashMap<Integer, User> userList = userService.getUserList();
 
     private static Logger log = LoggerFactory.getLogger(UserService.class);
 
@@ -26,7 +30,7 @@ public class UserController {
     public void changePwdClerk(User user){
         System.out.println("Which user id would you like to change password?");
         int userid = Integer.parseInt(sc.nextLine());
-        User account4Change = userList.get(userid);
+        User account4Change = userService.userList.get(userid);
         if(user.getLevel()>0){
             changePwd(account4Change);
         }
@@ -60,16 +64,29 @@ public class UserController {
         }
     }
 
+    //clerk and admin can use this.
+    public void getAnyUserInfo(User user){
+        if(user.getLevel() < 1){
+            System.out.println("Unauthorized action.");
+            return;
+        }
+        menuController.printAllUsers(userService.userList);
+        System.out.println("Which user id would you like to check info?");
+        int checkUserId = Integer.parseInt(sc.nextLine());
+        User selectedUser = userService.userList.get(checkUserId);
+        userInfo(selectedUser);
+        HashMap<Integer, Account> accountsOfUser = accountService.findAllByUser(selectedUser);
+        menuController.printAllAccounts(accountsOfUser);
+    }
 
 
-
-    public void deleteUser(){
-        //TODO: rewrite deleteDAOs SQL
+    public void deleteUser(int id){
         boolean bool = approve();
         if(bool) {
             System.out.println("Which account id do you want to delete?");
-            String id = sc.nextLine();
-            userList.remove(id);
+            id = Integer.parseInt(sc.nextLine());
+            userService.deleteUser(id);
+            userService.userList.remove(id);
         }else{
             System.out.println("failed to delete account");
         }
@@ -134,7 +151,7 @@ public class UserController {
         System.out.println("Please enter your unique username");
         String username = sc.nextLine();
 
-        while(userList.containsKey(username)){
+        while(userService.userList.containsKey(username)){
             System.out.println("username entered already exists, please try again. ");
             username = sc.nextLine();
         }
@@ -168,23 +185,25 @@ public class UserController {
         user = new User(accessLevel, username, pwd, keyword);
         userDao.addUser(user);
         user = userDao.findUserByUsername(username);
-        userList.put(user.getId(), user);
-        System.out.println("Account created! Welcome aboard " + user.getUsername() + "! Please proceed to login. ");
+        userService.userList.put(user.getId(), user);
+        System.out.println("New user created! Welcome aboard " + user.getUsername() + "! Please proceed to login. ");
+        log.info("new user made: " + user.toString());
+
         return user;
     }
 
     public boolean approve(){
         System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk User id");
 
-        User authorized = userList.get(Integer.parseInt(sc.nextLine()));
+        User authorized = userService.userList.get(Integer.parseInt(sc.nextLine()));
 
         while(authorized==null){
             System.out.println("Userid not found, please try again. ");
-            authorized = userList.get(Integer.parseInt(sc.nextLine()));
+            authorized = userService.userList.get(Integer.parseInt(sc.nextLine()));
         }
         while(authorized.getLevel()<1){
             System.out.println("Customers cannot approve applications. Please try again. ");
-            authorized = userList.get(Integer.parseInt(sc.nextLine()));
+            authorized = userService.userList.get(Integer.parseInt(sc.nextLine()));
         }
         System.out.println("Dear admin/clerk, please enter your password");
         String pwd = sc.nextLine();
@@ -203,6 +222,7 @@ public class UserController {
             return false;
         }
         System.out.println("Unexpected input detected. Please try again. ");
+        log.info("User id: " + authorized.getId() + "just approved an action");
         return approve();
     }
 
