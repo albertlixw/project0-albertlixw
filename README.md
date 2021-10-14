@@ -24,8 +24,8 @@ E.g.
   * User login with passwords and logout.
     * Passwords may not be stored in their raw form in the database. They must be encrypted somehow.  √
     * Stretch Goal: User registration.  √
-  * Validation for invalid inputs. 
-  * Reasonable Logging of user interactions with the application. 
+  * Validation for invalid inputs.  √
+  * Reasonable Logging of user interactions with the application.  √
 
 * Design:
   * Data persistence in a SQL database normalized to 3rd normal form.  √
