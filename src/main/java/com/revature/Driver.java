@@ -3,6 +3,8 @@ package com.revature;
 import controllers.MenuController;
 
 import models.*;
+import services.UserService;
+
 import java.util.*;
 
 
@@ -16,6 +18,10 @@ public class Driver {
 //        User user = menuController.getUser();
 //        Scanner scan = new Scanner(System.in);
 //        MenuController menuController = new MenuController();
+//
+//        UserService userService = new UserService();
+//        System.out.println(userService.approve());
+//
         System.out.println("Controller booting. ");
         menuController.userUI();
     }

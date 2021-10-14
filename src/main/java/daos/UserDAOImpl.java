@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO{
                 User user = new User(
                         result.getInt("user_level"),
                         result.getString("username"),
-                        result.getString("pwd"),
+                        result.getString("pwd").substring(0, result.getString("pwd").length() - 1),
                         result.getString("keyword")
                 );
                 int userId = result.getInt("userId");
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO{
                 user = new User(
                         result.getInt("user_level"),
                         result.getString("username"),
-                        result.getString("pwd"),
+                        result.getString("pwd").substring(0, result.getString("pwd").length() - 1),
                         result.getString("keyword")
                 );
                 int userId = result.getInt("userId");
@@ -88,7 +88,7 @@ public class UserDAOImpl implements UserDAO{
                 user = new User(
                         result.getInt("user_level"),
                         result.getString("username"),
-                        result.getString("pwd"),
+                        result.getString("pwd").substring(0, result.getString("pwd").length() - 1),
                         result.getString("keyword")
                 );
                 int userId = result.getInt("userId");
@@ -116,7 +116,7 @@ public class UserDAOImpl implements UserDAO{
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, user.getLevel());
             statement.setString(2, user.getUsername());
-            statement.setString(3, user.getPwd());
+            statement.setString(3, user.getPwd() + "*");
             statement.setString(4, user.getKeyword());
 
 //            if(user.getHome()!=null){
@@ -130,7 +130,8 @@ public class UserDAOImpl implements UserDAO{
             e.printStackTrace();
         }
 
-        return false;    }
+        return false;
+    }
 
     @Override
     public boolean updateUser(User user) {
@@ -140,7 +141,7 @@ public class UserDAOImpl implements UserDAO{
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, user.getLevel());
             statement.setString(2, user.getUsername());
-            statement.setString(3, user.getPwd());
+            statement.setString(3, user.getPwd() + "*");
             statement.setString(4, user.getKeyword());
             statement.setInt(5, user.getId());
             statement.execute();

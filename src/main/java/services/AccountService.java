@@ -7,17 +7,20 @@ import models.*;
 import java.util.*;
 
 public class AccountService {
-       private AccountDAO accountDao = new AccountDAOImpl();
+       private static AccountDAO accountDao = new AccountDAOImpl();
        private Scanner sc = new Scanner(System.in);
 
-       UserDAO userDao = new UserDAOImpl();
-       HashMap<Integer, User> userList = userDao.findAll();
-       
-
+       private static UserDAO userDao = new UserDAOImpl();
+       private static HashMap<Integer, User> userList = userDao.findAll();
+       private static List<Account> accountList = accountDao.findAll();
        public boolean approve(){
-              System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk account id");
+              System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk User id");
 
-              User authorized = userList.get(sc.nextLine());
+              User authorized = userList.get(Integer.parseInt(sc.nextLine()));
+              while(authorized==null){
+                     System.out.println("Userid not found, please try again. ");
+                     authorized = userList.get(sc.nextLine());
+              }
               while(authorized.getLevel()<1){
                      System.out.println("Customers cannot approve applications. Please try again. ");
                      authorized = userList.get(sc.nextLine());
@@ -42,15 +45,17 @@ public class AccountService {
               return approve();
        }
 
-       public Account makeNewAccount(){
+
+       public Account makeNewAccount(int addedUserId){
 
               System.out.println("Please enter your balance");
-              int balance = Integer.parseInt(sc.nextLine());
+              double balance = sc.nextDouble();
+              sc.nextLine();
 
               while(balance < 0||balance>1e50){
                      System.out.println("Balance can't be negative or greater than 1e50");
-                     balance = Integer.parseInt(sc.nextLine());
-              }
+                     balance = sc.nextDouble();
+                     sc.nextLine();              }
 
               //clerk approve
               System.out.println("Needs approval from admin/clerk");
@@ -60,6 +65,11 @@ public class AccountService {
               }
               Account acc = new Account(balance);
               accountDao.addAccount(acc);
+              //cuz account without user might as well not exist. 
+              //This is fine since I know it's single thread. 
+              accountList = accountDao.findAll();
+              int accid = accountList.size();
+              accountDao.addUserToAccount(accid, addedUserId);
               return acc;
        }
 
@@ -71,12 +81,12 @@ public class AccountService {
              return accountDao.findAll(); 
        }
 
-       public List<Account> findAllByUser(User user){
+       public HashMap<Integer, Account> findAllByUser(User user){
               return accountDao.findAllByUser(user);
        }
 
-       public boolean addUserToAccount(Account account, int addedUserId){
-             return accountDao.addUserToAccount(account, addedUserId);
+       public boolean addUserToAccount(int accountid, int addedUserId){
+             return accountDao.addUserToAccount(accountid, addedUserId);
        }
 
        public Account findById(int id){
@@ -100,7 +110,7 @@ public class AccountService {
        }
 
        public void accountInfo(Account acc) {
-              acc.toString();
+              System.out.println(acc.toString());
        }
 
 

@@ -11,9 +11,9 @@ public interface AccountDAO {
       public boolean updateAccount(Account account);
       public boolean addAccount(Account account);
 
-      public boolean addUserToAccount(Account account, int addedUserId);
+      public boolean addUserToAccount(int accountid, int addedUserId);
 
-    List<Account> findAllByUser(User user);
+    HashMap<Integer, Account> findAllByUser(User user);
 
       public List<User> findAllUsersOfAccount(Account acc);
 }

@@ -23,7 +23,38 @@ public class UserService {
     private static List<Account> accountList = new ArrayList<>();
 
 
+    public boolean approve(){
+        System.out.println("Admin/Clerk approval: Please enter a Admin/Clerk User id");
 
+        User authorized = userList.get(Integer.parseInt(sc.nextLine()));
+
+        while(authorized==null){
+            System.out.println("Userid not found, please try again. ");
+            authorized = userList.get(Integer.parseInt(sc.nextLine()));
+        }
+        while(authorized.getLevel()<1){
+            System.out.println("Customers cannot approve applications. Please try again. ");
+            authorized = userList.get(Integer.parseInt(sc.nextLine()));
+        }
+        System.out.println("Dear admin/clerk, please enter your password");
+        String pwd = sc.nextLine();
+        while(!authorized.getPwd().equals(pwd)){
+            System.out.println("password incorrect, please try again");
+            pwd = sc.nextLine();
+        }
+
+        System.out.println("login successful! Do you approve this action? y/n");
+        String input = sc.nextLine();
+        if(input.equals("y")){
+            System.out.println("approved");
+            return true;
+        }else if(input.equals("n")){
+            System.out.println("denied");
+            return false;
+        }
+        System.out.println("Unexpected input detected. Please try again. ");
+        return approve();
+    }
 
     public User getUser() {
         System.out.println("Welcome to user selection: Press 1 to select existing account, Press 2 to sign up;");
@@ -38,12 +69,13 @@ public class UserService {
             case "1" : {
                     try{
                         System.out.println("Please enter user id");
-                        int id = sc.nextInt();
-                        sc.nextLine();         //do this to pop /n after nextInt();
+                        int id = Integer.parseInt(sc.nextLine());
+                        //do this to pop /n after nextInt();
                         user = userDao.findUserById(id);
                         while(user==null){
                             System.out.println("user not found, please try again. ");
-                            id = sc.nextInt();
+                            id = Integer.parseInt(sc.nextLine());
+                            user = userDao.findUserById(id);
                         }
                         System.out.println("account found, please login");
 //                    id = sc.nextLine();
@@ -106,11 +138,13 @@ public class UserService {
         String keyword = sc.nextLine();
 
         System.out.println("Please enter your accessLevel. 0 for customer, 1 for clerk, 2 for admin. ");
-        int accessLevel = sc.nextInt();
+        int accessLevel = Integer.parseInt(sc.nextLine());
+//        sc.nextLine();                                f
 
         while((accessLevel>2)||accessLevel < 0){
             System.out.println("invalid input, please try again");
-            accessLevel = sc.nextInt();
+            accessLevel = Integer.parseInt(sc.nextLine());
+//            sc.nextLine();
         }
 
 
@@ -138,7 +172,7 @@ public class UserService {
         User modifiedAccount = userList.get(modifiedAccountId);
         userController.userInfo(modifiedAccount);
         System.out.println("Which role would you like to give account " + modifiedAccount.getId() + "?");
-        modifiedAccount.setLevel(sc.nextInt());
+        modifiedAccount.setLevel(Integer.parseInt(sc.nextLine()));
         userController.userInfo(modifiedAccount);
     }
 
@@ -203,7 +237,7 @@ public class UserService {
 
     public void deleteAccount(){
         //TODO: rewrite deleteDAOs SQL
-        boolean bool = accountService.approve();
+        boolean bool = approve();
         if(bool) {
             System.out.println("Which account id do you want to delete?");
             String id = sc.nextLine();
