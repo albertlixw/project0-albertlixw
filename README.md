@@ -44,8 +44,8 @@ E.g.
 **Bank Application Requirements**
 *	Customers of the bank should be able to register with a username and password, and apply to open an account.  √
     * Stretch Goal: Customers should be able to apply for joint accounts √
-*	Once the account is open, customers should be able to withdraw, deposit, and transfer funds between accounts
-    * All basic validation should be done, such as trying to input negative amounts, overdrawing from accounts etc.
+*	Once the account is open, customers should be able to withdraw, deposit, and transfer funds between accounts √
+    * All basic validation should be done, such as trying to input negative amounts, overdrawing from accounts etc. √
 *	Employees of the bank should be able to view all of their customers information. This includes:
     * Account information
     * Account balances
