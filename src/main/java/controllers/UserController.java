@@ -229,4 +229,23 @@ public class UserController {
     public void userInfo(User user){
         System.out.println(user.toString());
     }
+
+    //only admin can do this.
+    public void assignRole(User user){
+        if(user.getLevel()<2){
+            System.out.println("Unauthorized action.");
+            return;
+        }
+        System.out.println("Which accountId would you like to modify?");
+        int modifiedAccountId = Integer.parseInt(sc.nextLine());
+        User modifiedAccount = userService.userList.get(modifiedAccountId);
+        userInfo(modifiedAccount);
+        System.out.println("Which access level would you like to give account " + modifiedAccount.getId() + "?");
+        modifiedAccount.setLevel(Integer.parseInt(sc.nextLine()));
+        userDao.updateUser(modifiedAccount);
+        log.info("An account has been given access level: " + modifiedAccount.getLevel());
+        log.info(modifiedAccount.toString());
+        userInfo(modifiedAccount);
+        System.out.println();
+    }
 }

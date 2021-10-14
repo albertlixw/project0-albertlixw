@@ -71,7 +71,8 @@ public class MenuController {
 
     private void adminUI(User user) {
         System.out.println("Dear admin. What would you like to do today? ");
-        System.out.println("Enter: 0 - go to clerk UI; " +
+        System.out.println("Please Enter an option");
+        System.out.println(": 0 - go to clerk UI; " +
                 "1 - Edit user roles; " +
                 "2 - Deposit from any account; " +
                 "3 - Withdraw from any account; " +
@@ -86,7 +87,7 @@ public class MenuController {
             }
             case "1":{
 
-                userService.assignRole(user);
+                userController.assignRole(user);
                 adminUI(user);
                 break;
 
