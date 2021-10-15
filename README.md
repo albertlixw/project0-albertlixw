@@ -32,10 +32,10 @@ E.g.
     * Must contain at least three entity tables. (Join tables do not count.)  √
     * Must contain at least two relationships between tables.  √
       * Stretch Goal: Create a Many to Many relationship between tables.  √
-    * Must contain at least one stored procedure.   √
+    * Must contain at least one stored procedure.  √
   * Three layered architecture of the Java application. √
-    * Reasonable test coverage of the service layer. 
-      * Stretch Goal: Implement Test Driven Development.
+    * Reasonable test coverage of the service layer.  √
+      * Stretch Goal: Implement Test Driven Development. √
   * DAO design pattern. √
 * Other:
   * A SQL Script file that can be used to create a clone of your database structures.  √
