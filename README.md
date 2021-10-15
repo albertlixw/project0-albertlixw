@@ -14,7 +14,7 @@ E.g.
   *	Java 8
     * Scanner (CLI inputs) √
     * JDBC (Database Connectivity) √
-    * JUnit (Unit Testing) 
+    * JUnit (Unit Testing)  √
     * Logback (Logging) √
   * PostgreSQL √
   * Maven (Dependency Management) √
