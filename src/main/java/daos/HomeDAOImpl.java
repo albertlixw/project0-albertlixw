@@ -22,7 +22,7 @@ public class HomeDAOImpl implements HomeDAO{
 	@Override
 	public boolean updateHome(Home home) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "UPDATE accounts SET (home_name, home_number, home_street, home_city, home_region, home_zip, home_country) = (?,?,?,?,?,?,?) WHERE home_name = ?;";
+			String sql = "UPDATE homes SET (home_name, home_number, home_street, home_city, home_region, home_zip, home_country) = (?,?,?,?,?,?,?) WHERE home_name = ?;";
 
 			int count = 0;
 			PreparedStatement statement = conn.prepareStatement(sql);
