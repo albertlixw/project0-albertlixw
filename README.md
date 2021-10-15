@@ -21,7 +21,7 @@ E.g.
 *	Functionalities: 
   * Multi-tier Users - There must be at least three different types of user accounts each different functionality access.  √
   * Basic mathematic manipulation of the fields of an entity object. √
-  * User login with passwords and logout.
+  * User login with passwords and logout.  √
     * Passwords may not be stored in their raw form in the database. They must be encrypted somehow.  √
     * Stretch Goal: User registration.  √
   * Validation for invalid inputs.  √
