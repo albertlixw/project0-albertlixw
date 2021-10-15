@@ -12,4 +12,6 @@ public interface UserDAO {
     public boolean updateUser(User user);
 
     public User findUserByUsername(String username);
+    public boolean deleteMapping(int userId);
+        public boolean deleteUser(int id);
 }

@@ -1,1 +1,11 @@
 23:10:58.167 [] [main] WARN  controllers.MenuController - user exists but failed to get from List. null
+19:17:50.358 [] [main] INFO  services.UserService - new user made: User{id='22', level='2', username='user1', pwd='123', keyword='key123', home=No home info available}
+19:18:57.615 [] [main] INFO  controllers.MenuController - Account id: 5 just transferred $100.0 into account id 3
+19:19:39.942 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+19:21:04.000 [] [main] INFO  controllers.MenuController - Deleted user id: 10
+19:22:59.769 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+19:36:32.238 [] [main] WARN  controllers.MenuController - failed deleting account id: 3
+19:36:32.240 [] [main] WARN  controllers.MenuController - ERROR: update or delete on table "accounts" violates foreign key constraint "map_users_accounts_accountid_fkey" on table "map_users_accounts"
+  Detail: Key (accountid)=(3) is still referenced from table "map_users_accounts".
+19:37:41.879 [] [main] INFO  controllers.MenuController - Deleted account id: 3
+19:40:29.639 [] [main] INFO  controllers.MenuController - Deleted user id: 14

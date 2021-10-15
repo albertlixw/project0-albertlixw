@@ -6,7 +6,7 @@ import models.*;
 import java.util.*;
 
 public interface AccountDAO {
-      public List<Account> findAll();
+      public HashMap<Integer, Account> findAll();
       public Account findById(int accountId);
       public boolean updateAccount(Account account);
       public boolean addAccount(Account account);
@@ -15,5 +15,9 @@ public interface AccountDAO {
 
     HashMap<Integer, Account> findAllByUser(User user);
 
-      public List<User> findAllUsersOfAccount(Account acc);
+    public HashMap<Integer, User> findAllUsersOfAccount(Account acc);
+
+    public boolean deleteMapping(int accountId);
+
+    public boolean deleteAccount(int id);
 }

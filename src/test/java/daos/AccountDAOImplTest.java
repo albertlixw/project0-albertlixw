@@ -4,6 +4,7 @@ import models.Account;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,10 +34,10 @@ class AccountDAOImplTest {
         Account account = new Account(100.10);
         accountDao.addAccount(account);
         int accountId = account.getAccountId();
-        List<Account> accountList = accountDao.findAll();
+        HashMap<Integer, Account> accountList = accountDao.findAll();
 
-        assertTrue(accountList.contains(accId));
-        assertTrue(accountList.contains(accountId));
+        assertTrue(accountList.containsKey(accId));
+        assertTrue(accountList.containsKey(accountId));
 
 //        Assert.assertEquals(department.getName(), departments.get(0).getName());
 //        Assert.assertEquals(employee.getEmail(), employees.get(0).getEmail());

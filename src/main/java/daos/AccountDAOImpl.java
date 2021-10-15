@@ -1,8 +1,11 @@
 package daos;
 
+import controllers.MenuController;
 import models.Account;
 import models.Home;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.ConnectionUtil;
 
 import java.sql.*;
@@ -11,22 +14,24 @@ import java.util.*;
 
 public class AccountDAOImpl implements AccountDAO{
     private final HomeDAO homeDao = new HomeDAOImpl();
-//    private Scanner sc = new Scanner(System.in);
+    private static Logger log = LoggerFactory.getLogger(MenuController.class);
+
+    //    private Scanner sc = new Scanner(System.in);
     @Override
-    public List<Account> findAll() {
+    public HashMap<Integer, Account> findAll() {
 
         try(Connection conn = ConnectionUtil.getConnection()){
             String sql = "SELECT * FROM accounts;";
             Statement statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(sql);
-            List<Account> accountList = new ArrayList<>();
+            HashMap<Integer, Account> accountList = new HashMap<>();
 
             while(result.next()){
                 Account acc = new Account(0);
                 acc.setAccountId(result.getInt("accountid"));
                 acc.setBalance(result.getDouble("balance"));
-                accountList.add(acc);
+                accountList.put(acc.getAccountId(), acc);
             }
             return accountList;
         }catch (SQLException e){
@@ -61,12 +66,12 @@ public class AccountDAOImpl implements AccountDAO{
     @Override
     public boolean updateAccount(Account account) {
         try(Connection conn = ConnectionUtil.getConnection()){
-            String sql = "UPDATE account SET balance = ? WHERE accountid = ?;";
+            String sql = "UPDATE accounts SET balance = ? WHERE accountid = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setDouble(1, account.getBalance());
             statement.setInt(2, account.getAccountId());
-            statement.executeQuery();
+            statement.execute();
 
             return true;
 
@@ -139,7 +144,7 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public List<User> findAllUsersOfAccount(Account account) {
+    public HashMap<Integer, User> findAllUsersOfAccount(Account account) {
         try(Connection conn = ConnectionUtil.getConnection()) {
             String sql = "SELECT * FROM users u \n" +
                     "JOIN map_users_accounts m ON u.userid = m.userid\n" +
@@ -149,7 +154,7 @@ public class AccountDAOImpl implements AccountDAO{
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, account.getAccountId());
             ResultSet result = statement.executeQuery();
-            List<User> userList = new ArrayList<>();
+            HashMap<Integer, User> userList = new HashMap<>();
 
             while(result.next()){
                 User user = new User();
@@ -158,7 +163,7 @@ public class AccountDAOImpl implements AccountDAO{
                 user.setPwd(result.getString("pwd"));
                 user.setKeyword(result.getString("keyword"));
                 user.setLevel(result.getInt("user_level"));
-                userList.add(user);
+                userList.put(user.getId(), user);
                 String homeName = result.getString("home");
                 if(homeName!=null){
                     Home home = homeDao.findByName(homeName);
@@ -170,5 +175,37 @@ public class AccountDAOImpl implements AccountDAO{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean deleteMapping(int accountId) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM map_users_accounts WHERE accountid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean deleteAccount(int id) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM accounts WHERE accountid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            log.info("Deleted account id: " + id);
+            return true;
+        } catch (SQLException e) {
+            log.warn("failed deleting account id: " + id);
+            log.warn(e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 }

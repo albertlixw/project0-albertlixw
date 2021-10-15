@@ -1,7 +1,10 @@
 package daos;
 
+import controllers.MenuController;
 import models.Home;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.ConnectionUtil;
 
 import java.sql.*;
@@ -10,6 +13,7 @@ import java.util.*;
 public class UserDAOImpl implements UserDAO{
 
     private HomeDAO homeDao = new HomeDAOImpl();
+    private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
     @Override
     public HashMap<Integer, User> findAll() {
@@ -74,6 +78,39 @@ public class UserDAOImpl implements UserDAO{
         }
         return null;
     }
+
+    @Override
+    public boolean deleteMapping(int userId) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM map_users_accounts WHERE userid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "DELETE FROM users WHERE userid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            log.info("Deleted user id: " + id);
+            return true;
+        } catch (SQLException e) {
+            log.warn("failed deleting user id: " + id);
+            log.warn(e.getMessage());
+
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     @Override
     public User findUserById(int id) {
         try(Connection conn = ConnectionUtil.getConnection()){
