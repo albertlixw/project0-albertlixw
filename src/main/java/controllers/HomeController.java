@@ -81,6 +81,10 @@ public class HomeController {
 			System.out.println("Something went wrong. We could not register your home. Please try again.");
 		}
 	}
-	
 
+	public void deleteHome() {
+		System.out.println("Which homeName to delete?");
+		String homeName = scan.nextLine();
+		homeService.deleteHome(homeName);
+	}
 }

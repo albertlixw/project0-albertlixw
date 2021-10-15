@@ -8,11 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controllers.MenuController;
 import models.Home;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.ConnectionUtil;
 import utils.ConnectionUtil;
 
 public class HomeDAOImpl implements HomeDAO{
+
+	private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
 	@Override
 	public boolean updateHome(Home home) {
@@ -140,6 +145,23 @@ public class HomeDAOImpl implements HomeDAO{
 			return true;
 
 		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteHome(String homeName) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "DELETE FROM homes WHERE home_name = ?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, homeName);
+			ps.execute();
+			log.info("Deleted home: " + homeName);
+			return true;
+		} catch (SQLException e) {
+			log.warn("failed deleting home: " + homeName);
+			log.warn(e.getMessage());
 			e.printStackTrace();
 		}
 		return false;

@@ -262,7 +262,8 @@ public class MenuController {
                 + "2) See one home \n"
                 + "3) Add a home to the database. \n"
                 + "4) Update a home's address. \n"
-                + "5) Add home to a user");
+                + "5) Add home to a user. \n" +
+                  "6) delete a home. ");
         String response = sc.nextLine();
 
         switch (response) {
@@ -289,6 +290,10 @@ public class MenuController {
                 break;
             case "5":
                 homeController.addHomeToUser(user);
+                homeMenu(user);
+                break;
+            case "6":
+                homeController.deleteHome();
                 homeMenu(user);
                 break;
             default:

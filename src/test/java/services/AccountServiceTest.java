@@ -7,11 +7,13 @@ import daos.AccountDAOImpl;
 import daos.UserDAO;
 import daos.UserDAOImpl;
 import models.Account;
+import models.User;
 import org.junit.jupiter.api.*;
 import utils.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +23,7 @@ class AccountServiceTest {
     static AccountDAO accountDao = new AccountDAOImpl();
 //    static UserDAO userDao = new UserDAOImpl();
     static AccountService accountService = new AccountService();
+    static UserService userService = new UserService();
 
     @BeforeEach
     void beforeEach() {
@@ -126,28 +129,46 @@ class AccountServiceTest {
 
     @Test
     void accountInfo() {
+        Account acc2 = accountService.accountList.get(accountService.accountList.size()-1);//2000
+        assertTrue(accountService.accountInfo(acc2));
     }
     
     @Test
     void findAllUsersOfAccount() {
+        HashMap<Integer, User> accountHashMap = accountService.findAllUsersOfAccount(accountService.accountList.get(accountService.accountList.size()-1));
+
+        assertEquals(accountHashMap.size(), 0);
     }
 
     @Test
     void findAllAccount() {
+        HashMap<Integer, Account> accountHashMap = accountService.findAllAccount();
+        assertEquals(accountHashMap.size(), 5);
     }
 
     @Test
     void findAllByUser() {
+        User user = userService.userList.get(1);
+        HashMap<Integer, Account> accountHashMap = accountService.findAllByUser(user);
+        assertEquals(accountHashMap.size(), 3);
+        
     }
 
     @Test
     void addUserToAccount() {
+        Account acc2 = accountService.accountList.get(accountService.accountList.size()-1);//2000
+        User user = userService.userList.get(1);
+        accountService.addUserToAccount(acc2.getAccountId(), 1);
+        HashMap<Integer, Account> accountHashMap = accountService.findAllByUser(user);
+        assertEquals(accountHashMap.size(), 4);
     }
 
 
 
     @Test
     void findById() {
+        Account acc = accountService.findById(1);
+        assertEquals(acc.getAccountId(), 1);
     }
 
 

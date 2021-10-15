@@ -110,3 +110,12 @@
 02:25:39.211 [] [main] INFO  controllers.MenuController - Deleted account id: 6
 02:25:40.034 [] [main] INFO  controllers.MenuController - Deleted account id: 5
 02:38:51.605 [] [main] INFO  controllers.MenuController - Deleted user id: 6
+02:48:54.561 [] [main] INFO  controllers.MenuController - Deleted account id: 7
+02:51:55.462 [] [main] INFO  controllers.MenuController - Deleted account id: 8
+02:52:46.791 [] [main] INFO  controllers.MenuController - Deleted account id: 9
+02:56:44.875 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+02:59:23.751 [] [main] INFO  controllers.MenuController - Deleted account id: 11
+02:59:58.407 [] [main] INFO  controllers.MenuController - Deleted account id: 12
+03:03:24.215 [] [main] INFO  controllers.MenuController - Deleted account id: 13
+03:05:24.436 [] [main] INFO  controllers.MenuController - Deleted account id: 14
+03:05:41.426 [] [main] INFO  controllers.MenuController - Deleted account id: 15

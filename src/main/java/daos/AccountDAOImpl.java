@@ -78,6 +78,7 @@ public class AccountDAOImpl implements AccountDAO{
             Account acc = new Account(0);
 
             if(result.next()){
+                acc.setAccountId(result.getInt("accountid"));
                 acc.setBalance(result.getDouble("balance"));
             }
 

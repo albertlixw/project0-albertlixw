@@ -85,9 +85,7 @@ public class AccountService {
        }
 
 
-       public void accountInfo(Account acc) {
-              System.out.println(acc.toString());
-       }
+       public boolean accountInfo(Account acc) {System.out.println(acc.toString()); return true;}
 
 
 }

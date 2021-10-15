@@ -24,6 +24,6 @@ public class HomeService {
 	public boolean newHome(Home home) {
 		return homeDao.addHome(home);
 	}
-	
+	public boolean deleteHome(String homeName) {return homeDao.deleteHome(homeName);}
 
 }
