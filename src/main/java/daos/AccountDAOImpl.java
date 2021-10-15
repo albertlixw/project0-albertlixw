@@ -17,6 +17,30 @@ public class AccountDAOImpl implements AccountDAO{
     private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
     //    private Scanner sc = new Scanner(System.in);
+
+    @Override
+    public List<Account> findAllAccountAsList() {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "SELECT * FROM accounts;";
+            Statement statement = conn.createStatement();
+
+            ResultSet result = statement.executeQuery(sql);
+            List <Account> accountList = new ArrayList<>();
+
+            while(result.next()){
+                Account acc = new Account(0);
+                acc.setAccountId(result.getInt("accountid"));
+                acc.setBalance(result.getDouble("balance"));
+                accountList.add(acc);
+            }
+            return accountList;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public HashMap<Integer, Account> findAll() {
 
@@ -41,6 +65,8 @@ public class AccountDAOImpl implements AccountDAO{
         return null;
     }
 
+
+
     @Override
     public Account findById(int accountId) {
         try(Connection conn = ConnectionUtil.getConnection()){
@@ -52,6 +78,7 @@ public class AccountDAOImpl implements AccountDAO{
             Account acc = new Account(0);
 
             if(result.next()){
+                acc.setAccountId(result.getInt("accountid"));
                 acc.setBalance(result.getDouble("balance"));
             }
 
@@ -160,7 +187,7 @@ public class AccountDAOImpl implements AccountDAO{
                 User user = new User();
                 user.setId(result.getInt("userid"));
                 user.setUsername(result.getString("username"));
-                user.setPwd(result.getString("pwd"));
+                user.setPwd(result.getString("pwd").substring(0, result.getString("pwd").length() - 1));
                 user.setKeyword(result.getString("keyword"));
                 user.setLevel(result.getInt("user_level"));
                 userList.put(user.getId(), user);

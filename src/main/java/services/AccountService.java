@@ -1,7 +1,6 @@
 package services;
 
 import controllers.MenuController;
-import controllers.UserController;
 import daos.*;
 import models.*;
 import org.slf4j.Logger;
@@ -20,7 +19,8 @@ public class AccountService {
        private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
 //       private static HashMap<Integer, User> userList = userDao.findAll();
-       public static HashMap<Integer, Account> accountList = accountDao.findAll();
+       public static HashMap<Integer, Account> accountMap = accountDao.findAll();
+       public static List<Account> accountList = accountDao.findAllAccountAsList();
 
        public void deposit(Account account, double amount){
               while(amount < 0){
@@ -46,7 +46,7 @@ public class AccountService {
        }
        public void transfer(Account acc, int receivingAccountId, double amount) {
               withdraw(acc, amount);
-              deposit(accountList.get(receivingAccountId), amount);
+              deposit(accountMap.get(receivingAccountId), amount);
               System.out.println("Transfer completed. ");
               log.info("Account id: " + acc.getAccountId() + " just transferred $" + amount + " into account id "+ receivingAccountId);
        }
@@ -54,7 +54,9 @@ public class AccountService {
        public void deleteAccount(int accountId){
               accountDao.deleteMapping(accountId);
               accountDao.deleteAccount(accountId);
-              userService.userList.remove(accountId);
+//              userService.userList.remove(accountId);
+              accountList.remove(accountList.size() - 1);
+              accountMap.remove(accountId);
               System.out.println("account id: " + accountId + " deleted successfully");
        }
        
@@ -63,7 +65,11 @@ public class AccountService {
        }
 
        public HashMap<Integer, Account> findAllAccount(){
-             return accountDao.findAll(); 
+              return accountDao.findAll();
+       }
+
+       public List<Account> findAllAccountAsList(){
+              return accountDao.findAllAccountAsList();
        }
 
        public HashMap<Integer, Account> findAllByUser(User user){
@@ -79,9 +85,7 @@ public class AccountService {
        }
 
 
-       public void accountInfo(Account acc) {
-              System.out.println(acc.toString());
-       }
+       public boolean accountInfo(Account acc) {System.out.println(acc.toString()); return true;}
 
 
 }

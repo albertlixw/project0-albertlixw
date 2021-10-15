@@ -7,7 +7,9 @@ import java.util.*;
 
 public interface AccountDAO {
       public HashMap<Integer, Account> findAll();
-      public Account findById(int accountId);
+      List<Account> findAllAccountAsList();
+
+    public Account findById(int accountId);
       public boolean updateAccount(Account account);
       public boolean addAccount(Account account);
 
@@ -20,4 +22,5 @@ public interface AccountDAO {
     public boolean deleteMapping(int accountId);
 
     public boolean deleteAccount(int id);
+
 }

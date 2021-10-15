@@ -9,3 +9,121 @@
   Detail: Key (accountid)=(3) is still referenced from table "map_users_accounts".
 19:37:41.879 [] [main] INFO  controllers.MenuController - Deleted account id: 3
 19:40:29.639 [] [main] INFO  controllers.MenuController - Deleted user id: 14
+23:32:22.184 [] [main] INFO  controllers.MenuController - Deleted account id: 5
+23:32:22.466 [] [main] INFO  controllers.MenuController - Deleted account id: 5
+23:34:48.850 [] [main] INFO  controllers.MenuController - Deleted account id: 7
+23:34:49.103 [] [main] INFO  controllers.MenuController - Deleted account id: 7
+23:36:21.840 [] [main] INFO  controllers.MenuController - Deleted account id: 9
+23:36:22.087 [] [main] INFO  controllers.MenuController - Deleted account id: 9
+23:42:16.565 [] [main] INFO  controllers.MenuController - Deleted account id: 17
+23:42:17.067 [] [main] INFO  controllers.MenuController - Deleted account id: 17
+23:44:08.244 [] [main] INFO  controllers.MenuController - Deleted account id: 20
+23:44:08.747 [] [main] INFO  controllers.MenuController - Deleted account id: 20
+23:44:09.297 [] [main] INFO  controllers.MenuController - Deleted account id: 20
+23:44:19.612 [] [main] INFO  controllers.MenuController - Deleted account id: 22
+23:44:20.188 [] [main] INFO  controllers.MenuController - Deleted account id: 22
+23:44:20.690 [] [main] INFO  controllers.MenuController - Deleted account id: 22
+23:45:01.345 [] [main] INFO  controllers.MenuController - Deleted account id: 24
+23:45:01.867 [] [main] INFO  controllers.MenuController - Deleted account id: 24
+23:45:02.386 [] [main] INFO  controllers.MenuController - Deleted account id: 24
+23:47:17.656 [] [main] INFO  controllers.MenuController - Deleted account id: 26
+23:47:18.227 [] [main] INFO  controllers.MenuController - Deleted account id: 26
+23:47:18.786 [] [main] INFO  controllers.MenuController - Deleted account id: 26
+23:47:34.150 [] [main] INFO  controllers.MenuController - Deleted account id: 28
+23:47:34.758 [] [main] INFO  controllers.MenuController - Deleted account id: 28
+23:47:35.356 [] [main] INFO  controllers.MenuController - Deleted account id: 28
+23:59:15.681 [] [main] INFO  controllers.MenuController - Account id: 48 just transferred $300.0 into account id 3
+23:59:50.420 [] [main] INFO  controllers.MenuController - Account id: 3 just transferred $300.0 into account id 48
+00:25:28.284 [] [main] INFO  controllers.MenuController - Deleted account id: 57
+00:25:28.825 [] [main] INFO  controllers.MenuController - Deleted account id: 57
+00:25:29.393 [] [main] INFO  controllers.MenuController - Deleted account id: 57
+00:25:54.959 [] [main] INFO  controllers.MenuController - Deleted account id: 59
+00:25:55.462 [] [main] INFO  controllers.MenuController - Deleted account id: 59
+00:25:55.995 [] [main] INFO  controllers.MenuController - Deleted account id: 59
+00:26:14.543 [] [main] INFO  controllers.MenuController - Deleted account id: 61
+00:26:15.051 [] [main] INFO  controllers.MenuController - Deleted account id: 61
+00:26:15.603 [] [main] INFO  controllers.MenuController - Deleted account id: 61
+00:26:57.327 [] [main] INFO  controllers.MenuController - Deleted account id: 63
+00:26:57.898 [] [main] INFO  controllers.MenuController - Deleted account id: 63
+00:26:58.428 [] [main] INFO  controllers.MenuController - Deleted account id: 63
+00:26:59.397 [] [main] INFO  controllers.MenuController - Deleted account id: 63
+00:30:18.178 [] [main] INFO  controllers.MenuController - Deleted account id: 65
+00:31:33.799 [] [main] INFO  controllers.MenuController - Deleted account id: 67
+00:31:34.311 [] [main] INFO  controllers.MenuController - Deleted account id: 66
+00:31:57.676 [] [main] INFO  controllers.MenuController - Deleted account id: 69
+00:31:58.236 [] [main] INFO  controllers.MenuController - Deleted account id: 68
+00:35:26.642 [] [main] INFO  controllers.MenuController - Deleted account id: 70
+00:35:27.627 [] [main] INFO  controllers.MenuController - Deleted account id: 64
+00:35:28.141 [] [main] INFO  controllers.MenuController - Deleted account id: 55
+00:37:20.970 [] [main] INFO  controllers.MenuController - Deleted account id: 71
+00:37:21.820 [] [main] INFO  controllers.MenuController - Deleted account id: 54
+00:37:43.687 [] [main] INFO  controllers.MenuController - Deleted account id: 53
+00:37:44.659 [] [main] INFO  controllers.MenuController - Deleted account id: 52
+00:39:50.670 [] [main] INFO  controllers.MenuController - Deleted account id: 76
+00:39:51.521 [] [main] INFO  controllers.MenuController - Deleted account id: 75
+00:40:51.502 [] [main] INFO  controllers.MenuController - Deleted account id: 78
+00:40:52.284 [] [main] INFO  controllers.MenuController - Deleted account id: 77
+00:41:14.904 [] [main] INFO  controllers.MenuController - Deleted account id: 80
+00:41:15.754 [] [main] INFO  controllers.MenuController - Deleted account id: 79
+00:42:09.244 [] [main] INFO  controllers.MenuController - Deleted account id: 82
+00:43:49.235 [] [main] INFO  controllers.MenuController - Deleted account id: 85
+00:43:50.070 [] [main] INFO  controllers.MenuController - Deleted account id: 84
+00:44:37.627 [] [main] INFO  controllers.MenuController - Deleted account id: 87
+00:44:38.217 [] [main] INFO  controllers.MenuController - Deleted account id: 86
+00:44:38.870 [] [main] INFO  controllers.MenuController - Deleted account id: 83
+00:44:39.476 [] [main] INFO  controllers.MenuController - Deleted account id: 81
+00:44:40.008 [] [main] INFO  controllers.MenuController - Deleted account id: 74
+00:44:40.556 [] [main] INFO  controllers.MenuController - Deleted account id: 73
+00:44:41.087 [] [main] INFO  controllers.MenuController - Deleted account id: 48
+00:44:41.608 [] [main] INFO  controllers.MenuController - Deleted account id: 3
+00:46:03.952 [] [main] INFO  controllers.MenuController - Deleted account id: 89
+00:46:04.461 [] [main] INFO  controllers.MenuController - Deleted account id: 88
+00:46:05.046 [] [main] INFO  controllers.MenuController - Deleted account id: 72
+00:48:03.831 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+00:48:04.347 [] [main] INFO  controllers.MenuController - Deleted account id: 5
+00:48:21.509 [] [main] INFO  controllers.MenuController - Deleted account id: 8
+00:48:22.030 [] [main] INFO  controllers.MenuController - Deleted account id: 7
+00:48:36.978 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+00:48:37.750 [] [main] INFO  controllers.MenuController - Deleted account id: 9
+00:50:02.408 [] [main] INFO  controllers.MenuController - Account id: 3 just transferred $500.0 into account id 4
+00:50:03.172 [] [main] INFO  controllers.MenuController - Deleted account id: 13
+00:51:48.510 [] [main] INFO  controllers.MenuController - Account id: 3 just transferred $500.0 into account id 4
+00:51:49.327 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+00:54:10.260 [] [main] INFO  controllers.MenuController - Account id: 4 just transferred $500.0 into account id 3
+00:54:11.055 [] [main] INFO  controllers.MenuController - Deleted account id: 8
+00:56:32.685 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+00:58:27.200 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+00:59:39.451 [] [main] INFO  controllers.MenuController - Deleted account id: 8
+01:02:32.280 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+01:03:33.791 [] [main] INFO  controllers.MenuController - Deleted account id: 12
+01:05:44.210 [] [main] INFO  controllers.MenuController - Deleted account id: 14
+01:07:08.663 [] [main] INFO  controllers.MenuController - Deleted account id: 16
+01:15:18.355 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+01:16:14.636 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+01:18:55.522 [] [main] INFO  controllers.MenuController - Deleted account id: 8
+01:19:31.635 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+01:19:32.413 [] [main] INFO  controllers.MenuController - Deleted account id: 9
+02:25:12.045 [] [main] INFO  controllers.MenuController - Account id: 12 just transferred $500.0 into account id 11
+02:25:12.890 [] [main] INFO  controllers.MenuController - Deleted account id: 12
+02:25:13.750 [] [main] INFO  controllers.MenuController - Deleted account id: 11
+02:25:38.367 [] [main] INFO  controllers.MenuController - Account id: 6 just transferred $500.0 into account id 5
+02:25:39.211 [] [main] INFO  controllers.MenuController - Deleted account id: 6
+02:25:40.034 [] [main] INFO  controllers.MenuController - Deleted account id: 5
+02:38:51.605 [] [main] INFO  controllers.MenuController - Deleted user id: 6
+02:48:54.561 [] [main] INFO  controllers.MenuController - Deleted account id: 7
+02:51:55.462 [] [main] INFO  controllers.MenuController - Deleted account id: 8
+02:52:46.791 [] [main] INFO  controllers.MenuController - Deleted account id: 9
+02:56:44.875 [] [main] INFO  controllers.MenuController - Deleted account id: 10
+02:59:23.751 [] [main] INFO  controllers.MenuController - Deleted account id: 11
+02:59:58.407 [] [main] INFO  controllers.MenuController - Deleted account id: 12
+03:03:24.215 [] [main] INFO  controllers.MenuController - Deleted account id: 13
+03:05:24.436 [] [main] INFO  controllers.MenuController - Deleted account id: 14
+03:05:41.426 [] [main] INFO  controllers.MenuController - Deleted account id: 15
+10:59:24.353 [] [main] INFO  services.UserService - An account has been given access level: 1
+10:59:24.360 [] [main] INFO  services.UserService - User{id='4', level='1', username='hulk', pwd='smash', keyword='Natasha', home=No home info available}
+11:00:55.027 [] [main] INFO  controllers.MenuController - Account id: 1 just transferred $400.0 into account id 3
+11:04:44.055 [] [main] INFO  services.UserService - new user made: User{id='6', level='0', username='steverogers', pwd='captain', keyword='shield', home=No home info available}
+11:06:35.871 [] [main] INFO  services.UserService - An account has been given access level: 1
+11:06:35.881 [] [main] INFO  services.UserService - User{id='6', level='1', username='steverogers', pwd='captain', keyword='shield', home=No home info available}
+11:07:06.987 [] [main] INFO  controllers.MenuController - Deleted user id: 6
+11:07:51.577 [] [main] INFO  controllers.MenuController - Account id: 1 just transferred $200.0 into account id 3

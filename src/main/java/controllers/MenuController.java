@@ -1,7 +1,7 @@
 package controllers;
 
 import models.*;
-import controllers.*;
+//import controllers.*;
 
 
 
@@ -9,7 +9,7 @@ import services.AccountService;
 import services.UserService;
 
 import java.util.*;
-import java.util.List;
+//import java.util.List;
 
 public class MenuController {
 
@@ -19,36 +19,42 @@ public class MenuController {
 
     private AccountController accountController = new AccountController();
     private UserController userController = new UserController();
+    private HomeController homeController = new HomeController();
 
 //    HashMap<Integer, User> userList = userService.getUserList();
 
-    public void userUI(){
-        System.out.println("Welcome to User UI");
-        User user = userController.getUser();
-        login(user);
-        System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
-        switch(user.getLevel()){
-            case 2:{
-                adminUI(user);
-                System.out.println("Transferring to clerk's UI");
+    public void userUI() {
+        try{
+            System.out.println("Welcome to User UI");
+            User user = userController.getUser();
+            login(user);
+//            System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
+            switch(user.getLevel()){
+                case 2:{
+                    adminUI(user);
+                    System.out.println("Transferring to clerk's UI");
+                }
+                case 1 : {
+                    clerkUI(user);
+                    System.out.println("Transferring to customer's UI");
+                }
+                case 0:{
+                    customerUI(user);
+                    break;
+                }
+                default: {
+                    System.out.println("invalid input, please try again");
+                    userUI();
+                    break;
+                }
             }
-            case 1 : {
-                clerkUI(user);
-                System.out.println("Transferring to customer's UI");
-            }
-            case 0:{
-                customerUI(user);
-                break;
-            }
-            default: {
-                System.out.println("invalid input, please try again");
-                userUI();
-                break;
-            }
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            userUI();
         }
     }
 
-    private void clerkUI(User user) {
+    private void clerkUI(User user) throws NumberFormatException{
         System.out.println("Dear clerk: What would you like to do today? 0. go to customer UI. 1. Check any user's info. 2. Change password of an account. ");
         switch(sc.nextLine()){
             case "0":{
@@ -69,7 +75,7 @@ public class MenuController {
         }
     }
 
-    private void adminUI(User user) {
+    private void adminUI(User user) throws NumberFormatException{
         System.out.println("Dear admin. What would you like to do today? ");
         System.out.println("Please Enter an option");
         System.out.println(": 0 - go to clerk UI; " +
@@ -126,13 +132,14 @@ public class MenuController {
     //return userobj
     //switch role to determine which menu to print
     
-    public void customerUI(User user){
+    public void customerUI(User user)throws NumberFormatException{
         System.out.println("Welcome, dear customer. " +
                 "Enter 0 to logout；" +
                 "1：select account id; " +
                 "2: change password; " +
                 "3: get userInfo; " +
-                "4: create a new account for userid: " + user.getId());
+                "4: create a new account for userid: " + user.getId() + "; " +
+                "5: Home menu; "        );
         switch(sc.nextLine()){
             case "0":{
                 break;
@@ -142,14 +149,19 @@ public class MenuController {
                 HashMap<Integer, Account> accountList = accountService.findAllByUser(user);
                 System.out.println("Accounts under current user: " );
                 printAllAccounts(accountList);
-                System.out.println("Please select an account id");
+                System.out.println("Please select an account id; Enter 0 to exit account selection");
                 int accountId = sc.nextInt();
                 sc.nextLine();
 
-                while(!accountList.containsKey(accountId))  {
-                    System.out.println("You don't seem to own this account, please select from the list. ");
+                while((!accountList.containsKey(accountId))&&accountId!=0)  {
+                    System.out.println("You don't seem to own this account, please select from the list. Enter 0 to exit account selection");
                     accountId = sc.nextInt();
                     sc.nextLine();
+                }
+                if(accountId==0){
+                    System.out.println("Exited account selection");
+                    customerUI(user);
+                    break;
                 }
                 Account acc = accountList.get(accountId);
 
@@ -211,7 +223,7 @@ public class MenuController {
                     case "6":{
                         HashMap<Integer, User> userList = accountService.findAllUsersOfAccount(acc);
                         System.out.println("This account is owned by these user IDs: ");
-                        printAllUsers(userList);
+                        printAllUsersIdLevelUsername(userList);
                         customerUI(user);
                         break;
                     }
@@ -240,12 +252,66 @@ public class MenuController {
                 customerUI(user);
                 break;
             }
+            case "5":{
+                homeMenu(user);
+                customerUI(user);
+                break;
+            }
             default: {
                 System.out.println("invalid input, please try again");
                 customerUI(user);
                 break;
             }
         }
+    }
+    private void homeMenu(User user) throws NumberFormatException{
+        System.out.println("Welcome to home menu");
+        System.out.println("What would you like to do with your homes? \n"
+                + "0) Return to Previous Menu. "
+                + "1) See all homes \n"
+                + "2) See one home \n"
+                + "3) Add a home to the database. \n"
+                + "4) Update a home's address. \n"
+                + "5) Add home to a user. \n" +
+                  "6) delete a home. ");
+        String response = sc.nextLine();
+
+        switch (response) {
+            case "0":
+                break;
+
+            case "1":
+                homeController.displayAllHomes();
+                homeMenu(user);
+                break;
+            case "2":
+                System.out.println("What is the home name?");
+                String name = sc.nextLine();
+                homeController.displayOneHome(name);
+                homeMenu(user);
+                break;
+            case "3":
+                homeController.addHome();
+                homeMenu(user);
+                break;
+            case "4":
+                homeController.updateHome();
+                homeMenu(user);
+                break;
+            case "5":
+                homeController.addHomeToUser(user);
+                homeMenu(user);
+                break;
+            case "6":
+                homeController.deleteHome();
+                homeMenu(user);
+                break;
+            default:
+                System.out.println("That was not a valid input. Please try again.");
+                homeMenu(user);
+                break;
+        }
+
     }
 
     public void login(User user){
@@ -258,7 +324,7 @@ public class MenuController {
             
             if(userService.login(user, username, pwd)){
 
-                System.out.println("login successful! Welcome back, level "+ user.getLevel() + " user, UserId: " + user.getId());
+                System.out.println("login successful! Welcome back, level "+ user.getLevel() + " user, " + user.printIdLevelUsername());
                 //check account type: user? clerk? admin?
             }else{
                 System.out.println("One/both of them failed, please try again. ");
@@ -276,6 +342,11 @@ public class MenuController {
     public void printAllUsers(HashMap<Integer,User> list){
         for(Integer i : list.keySet()){
             System.out.println(list.get(i).toString());
+        }
+    }
+    public void printAllUsersIdLevelUsername(HashMap<Integer,User> list){
+        for(Integer i : list.keySet()){
+            System.out.println(list.get(i).printIdLevelUsername());
         }
     }
 }

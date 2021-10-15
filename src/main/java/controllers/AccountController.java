@@ -35,7 +35,7 @@ public class AccountController {
     public void depositAdmin(User user){
         System.out.println("Which account id would you like to deposit money into?");
         int accId = Integer.parseInt(sc.nextLine());
-        Account accountSelected = accountService.accountList.get(accId);
+        Account accountSelected = accountService.accountMap.get(accId);
         System.out.println("How much would you like to deposit?");
         double amount = sc.nextDouble();
         sc.nextLine();
@@ -46,7 +46,7 @@ public class AccountController {
     public void withdrawAdmin(User user){
         System.out.println("Which account id would you like to withdraw money from?");
         int accId = Integer.parseInt(sc.nextLine());
-        Account accountSelected = accountService.accountList.get(accId);
+        Account accountSelected = accountService.accountMap.get(accId);
         System.out.println("How much would you like to withdraw?");
         double amount = sc.nextDouble();
         sc.nextLine();
@@ -58,7 +58,7 @@ public class AccountController {
     public void transferAdmin(User user){
         System.out.println("Which account id would you like to withdraw money from?");
         int accId = Integer.parseInt(sc.nextLine());
-        Account accountSelected = accountService.accountList.get(accId);
+        Account accountSelected = accountService.accountMap.get(accId);
         System.out.println("How much would you like to withdraw?");
         double amount = sc.nextDouble();
         sc.nextLine();
@@ -90,7 +90,7 @@ public class AccountController {
         accountDao.addAccount(acc);
         //cuz account without user might as well not exist.
         //This is fine since I know it's single thread.
-        accountService.accountList = accountDao.findAll();
+        accountService.accountList = accountDao.findAllAccountAsList();
         int accid = accountService.accountList.get(accountService.accountList.size()-1).getAccountId();
         accountDao.addUserToAccount(accid, addedUserId);
         log.info("new account made with account id: " + accid);
