@@ -21,7 +21,7 @@ E.g.
 *	Functionalities: 
   * Multi-tier Users - There must be at least three different types of user accounts each different functionality access.  √
   * Basic mathematic manipulation of the fields of an entity object. √
-  * User login with passwords and logout.
+  * User login with passwords and logout.  √
     * Passwords may not be stored in their raw form in the database. They must be encrypted somehow.  √
     * Stretch Goal: User registration.  √
   * Validation for invalid inputs.  √
@@ -32,7 +32,7 @@ E.g.
     * Must contain at least three entity tables. (Join tables do not count.)  √
     * Must contain at least two relationships between tables.  √
       * Stretch Goal: Create a Many to Many relationship between tables.  √
-    * Must contain at least one stored procedure. 
+    * Must contain at least one stored procedure.   √
   * Three layered architecture of the Java application. √
     * Reasonable test coverage of the service layer. 
       * Stretch Goal: Implement Test Driven Development.
