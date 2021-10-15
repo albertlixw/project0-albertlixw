@@ -28,7 +28,7 @@ public class MenuController {
             System.out.println("Welcome to User UI");
             User user = userController.getUser();
             login(user);
-            System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
+//            System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
             switch(user.getLevel()){
                 case 2:{
                     adminUI(user);
@@ -223,7 +223,7 @@ public class MenuController {
                     case "6":{
                         HashMap<Integer, User> userList = accountService.findAllUsersOfAccount(acc);
                         System.out.println("This account is owned by these user IDs: ");
-                        printAllUsers(userList);
+                        printAllUsersIdLevelUsername(userList);
                         customerUI(user);
                         break;
                     }
@@ -324,7 +324,7 @@ public class MenuController {
             
             if(userService.login(user, username, pwd)){
 
-                System.out.println("login successful! Welcome back, level "+ user.getLevel() + " user, UserId: " + user.getId());
+                System.out.println("login successful! Welcome back, level "+ user.getLevel() + " user, " + user.printIdLevelUsername());
                 //check account type: user? clerk? admin?
             }else{
                 System.out.println("One/both of them failed, please try again. ");
@@ -342,6 +342,11 @@ public class MenuController {
     public void printAllUsers(HashMap<Integer,User> list){
         for(Integer i : list.keySet()){
             System.out.println(list.get(i).toString());
+        }
+    }
+    public void printAllUsersIdLevelUsername(HashMap<Integer,User> list){
+        for(Integer i : list.keySet()){
+            System.out.println(list.get(i).printIdLevelUsername());
         }
     }
 }

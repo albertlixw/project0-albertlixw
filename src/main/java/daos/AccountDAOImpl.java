@@ -187,7 +187,7 @@ public class AccountDAOImpl implements AccountDAO{
                 User user = new User();
                 user.setId(result.getInt("userid"));
                 user.setUsername(result.getString("username"));
-                user.setPwd(result.getString("pwd"));
+                user.setPwd(result.getString("pwd").substring(0, result.getString("pwd").length() - 1));
                 user.setKeyword(result.getString("keyword"));
                 user.setLevel(result.getInt("user_level"));
                 userList.put(user.getId(), user);
