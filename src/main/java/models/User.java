@@ -39,6 +39,16 @@ public class User {
         return res;
     }
 
+    public String printIdLevelUsername() {
+        String res = "User{" +
+                "id='" + id + '\'' +
+                ", level='" + level + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+
+        return res;
+    }
+
     public int getId() {
         return id;
     }

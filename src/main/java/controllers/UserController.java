@@ -100,7 +100,7 @@ public class UserController {
         }
     }
 
-    public User getUser() {
+    public User getUser() throws NumberFormatException{
         System.out.println("Welcome to user selection: Press 1 to select existing user, Press 2 to sign up;");
         String input = sc.nextLine();
 
@@ -116,12 +116,12 @@ public class UserController {
                     int id = Integer.parseInt(sc.nextLine());
                     //do this to pop /n after nextInt();
                     user = userDao.findUserById(id);
-                    while(user==null){
+                    while(user.getId()==0){
                         System.out.println("user not found, please try again. ");
                         id = Integer.parseInt(sc.nextLine());
                         user = userDao.findUserById(id);
                     }
-                    System.out.println("account found, please login");
+                    System.out.println("user found, please login");
 //                    id = sc.nextLine();
 //                    if(id.equals("-1")) break;
 //                        user = userList.get(id);
@@ -143,7 +143,7 @@ public class UserController {
         System.out.println("invalid choice, please try again. ");
         return getUser();
     }
-    public User newUserBuilder() throws SQLException {
+    public User newUserBuilder() throws SQLException, NumberFormatException {
 
 
         User user;

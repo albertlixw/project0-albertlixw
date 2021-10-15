@@ -10,6 +10,7 @@ public interface HomeDAO {
 	public Home findByName(String name);
 	public boolean updateHome(Home home);
 	public boolean addHome(Home home);
-	
+	public boolean deleteHome(String homeName);
+
 
 }
