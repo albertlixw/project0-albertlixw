@@ -127,3 +127,24 @@
 11:06:35.881 [] [main] INFO  services.UserService - User{id='6', level='1', username='steverogers', pwd='captain', keyword='shield', home=No home info available}
 11:07:06.987 [] [main] INFO  controllers.MenuController - Deleted user id: 6
 11:07:51.577 [] [main] INFO  controllers.MenuController - Account id: 1 just transferred $200.0 into account id 3
+12:59:24.858 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+12:59:59.586 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:04:07.229 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:04:08.315 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:04:09.466 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:04:10.268 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:06:19.991 [] [main] INFO  controllers.MenuController - Deleted home: homeName1
+13:06:20.259 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:06:51.726 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:07:10.460 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:07:32.539 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:07:33.071 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:02.919 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:03.469 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:27.305 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:28.393 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:28.950 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:29.447 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:30.529 [] [main] INFO  controllers.MenuController - Deleted home: homeName1
+13:08:30.786 [] [main] INFO  controllers.MenuController - Deleted home: homeName
+13:08:31.599 [] [main] INFO  controllers.MenuController - Deleted home: homeName

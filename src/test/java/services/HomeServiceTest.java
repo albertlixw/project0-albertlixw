@@ -1,9 +1,7 @@
 package services;
 
 import models.Home;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -15,10 +13,11 @@ class HomeServiceTest {
 
     @Test
     void newHome() {
-        Home home = new Home("homeName", "number", "street", "city", "region", "zip", "country");
+        Home home = new Home("homeName1", "number", "street", "city", "region", "zip", "country");
         homeService.newHome(home);
-        List<Home> homeList = homeService.findAllHomes();
-        assertEquals(homeList.size(), 3);
+        Home homeFromDB = homeService.findByName("homeName1");
+        assertEquals(home.toString(), homeFromDB.toString());
+        homeService.deleteHome("homeName1");
     }
 
     @Test
@@ -46,15 +45,27 @@ class HomeServiceTest {
     }
 
 
-//    @AfterAll
-//    static void deleteHome() {
-//        homeService.deleteHome("homeName");
-//        assertNull(homeService.findByName("homeName"));
-//    }
-//
+    @Test
+    void deleteHome() {
+        homeService.deleteHome("homeName");
+        assertNull(homeService.findByName("homeName").getName());
+    }
+
+    @BeforeEach
+    void setUp() {
+        Home home = new Home("homeName", "number", "street", "city", "region", "zip", "country");
+        homeService.newHome(home);
+    }
+
+    @AfterEach
+    void tearDown() {
+        homeService.deleteHome("homeName");
+    }
+
 //    @BeforeAll
 //    static void beforeAll() {
-//
+//        Home home = new Home("homeName", "number", "street", "city", "region", "zip", "country");
+//        homeService.newHome(home);
 //    }
 
 
