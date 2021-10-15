@@ -1,7 +1,7 @@
 package controllers;
 
 import models.*;
-import controllers.*;
+//import controllers.*;
 
 
 
@@ -9,7 +9,7 @@ import services.AccountService;
 import services.UserService;
 
 import java.util.*;
-import java.util.List;
+//import java.util.List;
 
 public class MenuController {
 
@@ -19,6 +19,7 @@ public class MenuController {
 
     private AccountController accountController = new AccountController();
     private UserController userController = new UserController();
+    private HomeController homeController = new HomeController();
 
 //    HashMap<Integer, User> userList = userService.getUserList();
 
@@ -132,7 +133,8 @@ public class MenuController {
                 "1：select account id; " +
                 "2: change password; " +
                 "3: get userInfo; " +
-                "4: create a new account for userid: " + user.getId());
+                "4: create a new account for userid: " + user.getId() + "; " +
+                "5: Home menu; "        );
         switch(sc.nextLine()){
             case "0":{
                 break;
@@ -240,12 +242,61 @@ public class MenuController {
                 customerUI(user);
                 break;
             }
+            case "5":{
+                homeMenu(user);
+                customerUI(user);
+                break;
+            }
             default: {
                 System.out.println("invalid input, please try again");
                 customerUI(user);
                 break;
             }
         }
+    }
+    private void homeMenu(User user) {
+        System.out.println("Welcome to home menu");
+        System.out.println("What would you like to do with your homes? \n"
+                + "0) Return to Previous Menu. "
+                + "1) See all homes \n"
+                + "2) See one home \n"
+                + "3) Add a home to the database. \n"
+                + "4) Update a home's address. \n"
+                + "5) Add home to a user");
+        String response = sc.nextLine();
+
+        switch (response) {
+            case "0":
+                break;
+
+            case "1":
+                homeController.displayAllHomes();
+                homeMenu(user);
+                break;
+            case "2":
+                System.out.println("What is the home name?");
+                String name = sc.nextLine();
+                homeController.displayOneHome(name);
+                homeMenu(user);
+                break;
+            case "3":
+                homeController.addHome();
+                homeMenu(user);
+                break;
+            case "4":
+                homeController.updateHome();
+                homeMenu(user);
+                break;
+            case "5":
+                homeController.addHomeToUser(user);
+                homeMenu(user);
+                break;
+            default:
+                System.out.println("That was not a valid input. Please try again.");
+                homeMenu(user);
+                break;
+        }
+
     }
 
     public void login(User user){

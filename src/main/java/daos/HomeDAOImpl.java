@@ -15,6 +15,34 @@ import utils.ConnectionUtil;
 public class HomeDAOImpl implements HomeDAO{
 
 	@Override
+	public boolean updateHome(Home home) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE accounts SET (home_name, home_number, home_street, home_city, home_region, home_zip, home_country) = (?,?,?,?,?,?,?) WHERE home_name = ?;";
+
+			int count = 0;
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(++count, home.getName());
+			statement.setString(++count, home.getStreetNumber());
+			statement.setString(++count, home.getStreetName());
+			statement.setString(++count, home.getCity());
+			statement.setString(++count, home.getRegion());
+			statement.setString(++count, home.getZip());
+			statement.setString(++count, home.getCountry());
+			//where home_name =
+			statement.setString(++count, home.getName());
+			statement.execute();
+
+			return true;
+
+		}   catch(SQLException e){
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	
+	@Override
 	public List<Home> findAll() {
 		try(Connection conn = ConnectionUtil.getConnection()){ //try-with-resources 
 			String sql = "SELECT * FROM homes;";
@@ -86,18 +114,13 @@ public class HomeDAOImpl implements HomeDAO{
 		return null;
 	}
 
-	@Override
-	public boolean updateHome(Home home) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean addHome(Home home) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			
-			String sql = "INSERT INTO homes (home_name, home_number, home_street, home_city, home_region, home_zip, home_country, residents) "
-					+ "VALUES (?,?,?,?,?,?,?,?);";
+			String sql = "INSERT INTO homes (home_name, home_number, home_street, home_city, home_region, home_zip, home_country) "
+					+ "VALUES (?,?,?,?,?,?,?);";
 			
 			int count = 0;
 			
