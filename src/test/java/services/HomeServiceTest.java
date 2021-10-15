@@ -12,6 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HomeServiceTest {
     static HomeService homeService = new HomeService();
+
+    @BeforeAll
+    void newHome() {
+        Home home = new Home("homeName", "number", "street", "city", "region", "zip", "country");
+        homeService.newHome(home);
+        List<Home> homeList = homeService.findAllHomes();
+        assertEquals(homeList.size(), 3);
+    }
+
     @Test
     void findAllHomes() {
          List<Home> homeList = homeService.findAllHomes();
@@ -36,14 +45,8 @@ class HomeServiceTest {
         assertEquals(home.getCountry(), "Space");
     }
 
-    @BeforeAll
-    void newHome() {
-        Home home = new Home("homeName", "number", "street", "city", "region", "zip", "country");
-        homeService.newHome(home);
-        List<Home> homeList = homeService.findAllHomes();
-        assertEquals(homeList.size(), 3);
-    }
-    @Test
+
+    @AfterAll
     static void deleteHome() {
         homeService.deleteHome("homeName");
         assertNull(homeService.findByName("homeName"));

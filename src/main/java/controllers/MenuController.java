@@ -23,33 +23,38 @@ public class MenuController {
 
 //    HashMap<Integer, User> userList = userService.getUserList();
 
-    public void userUI(){
-        System.out.println("Welcome to User UI");
-        User user = userController.getUser();
-        login(user);
-        System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
-        switch(user.getLevel()){
-            case 2:{
-                adminUI(user);
-                System.out.println("Transferring to clerk's UI");
+    public void userUI() {
+        try{
+            System.out.println("Welcome to User UI");
+            User user = userController.getUser();
+            login(user);
+            System.out.println(user.getUsername() + ", level " + user.getLevel()+" user, userId: " + user.getId());
+            switch(user.getLevel()){
+                case 2:{
+                    adminUI(user);
+                    System.out.println("Transferring to clerk's UI");
+                }
+                case 1 : {
+                    clerkUI(user);
+                    System.out.println("Transferring to customer's UI");
+                }
+                case 0:{
+                    customerUI(user);
+                    break;
+                }
+                default: {
+                    System.out.println("invalid input, please try again");
+                    userUI();
+                    break;
+                }
             }
-            case 1 : {
-                clerkUI(user);
-                System.out.println("Transferring to customer's UI");
-            }
-            case 0:{
-                customerUI(user);
-                break;
-            }
-            default: {
-                System.out.println("invalid input, please try again");
-                userUI();
-                break;
-            }
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            userUI();
         }
     }
 
-    private void clerkUI(User user) {
+    private void clerkUI(User user) throws NumberFormatException{
         System.out.println("Dear clerk: What would you like to do today? 0. go to customer UI. 1. Check any user's info. 2. Change password of an account. ");
         switch(sc.nextLine()){
             case "0":{
@@ -70,7 +75,7 @@ public class MenuController {
         }
     }
 
-    private void adminUI(User user) {
+    private void adminUI(User user) throws NumberFormatException{
         System.out.println("Dear admin. What would you like to do today? ");
         System.out.println("Please Enter an option");
         System.out.println(": 0 - go to clerk UI; " +
@@ -127,7 +132,7 @@ public class MenuController {
     //return userobj
     //switch role to determine which menu to print
     
-    public void customerUI(User user){
+    public void customerUI(User user)throws NumberFormatException{
         System.out.println("Welcome, dear customer. " +
                 "Enter 0 to logout；" +
                 "1：select account id; " +
@@ -254,7 +259,7 @@ public class MenuController {
             }
         }
     }
-    private void homeMenu(User user) {
+    private void homeMenu(User user) throws NumberFormatException{
         System.out.println("Welcome to home menu");
         System.out.println("What would you like to do with your homes? \n"
                 + "0) Return to Previous Menu. "
