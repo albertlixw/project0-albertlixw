@@ -17,6 +17,30 @@ public class AccountDAOImpl implements AccountDAO{
     private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
     //    private Scanner sc = new Scanner(System.in);
+
+    @Override
+    public List<Account> findAllAccountAsList() {
+        try(Connection conn = ConnectionUtil.getConnection()){
+            String sql = "SELECT * FROM accounts;";
+            Statement statement = conn.createStatement();
+
+            ResultSet result = statement.executeQuery(sql);
+            List <Account> accountList = new ArrayList<>();
+
+            while(result.next()){
+                Account acc = new Account(0);
+                acc.setAccountId(result.getInt("accountid"));
+                acc.setBalance(result.getDouble("balance"));
+                accountList.add(acc);
+            }
+            return accountList;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public HashMap<Integer, Account> findAll() {
 
@@ -40,6 +64,8 @@ public class AccountDAOImpl implements AccountDAO{
 
         return null;
     }
+
+
 
     @Override
     public Account findById(int accountId) {
