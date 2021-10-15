@@ -149,14 +149,19 @@ public class MenuController {
                 HashMap<Integer, Account> accountList = accountService.findAllByUser(user);
                 System.out.println("Accounts under current user: " );
                 printAllAccounts(accountList);
-                System.out.println("Please select an account id");
+                System.out.println("Please select an account id; Enter 0 to exit account selection");
                 int accountId = sc.nextInt();
                 sc.nextLine();
 
-                while(!accountList.containsKey(accountId))  {
-                    System.out.println("You don't seem to own this account, please select from the list. ");
+                while((!accountList.containsKey(accountId))&&accountId!=0)  {
+                    System.out.println("You don't seem to own this account, please select from the list. Enter 0 to exit account selection");
                     accountId = sc.nextInt();
                     sc.nextLine();
+                }
+                if(accountId==0){
+                    System.out.println("Exited account selection");
+                    customerUI(user);
+                    break;
                 }
                 Account acc = accountList.get(accountId);
 

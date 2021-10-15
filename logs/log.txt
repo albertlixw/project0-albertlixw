@@ -119,3 +119,11 @@
 03:03:24.215 [] [main] INFO  controllers.MenuController - Deleted account id: 13
 03:05:24.436 [] [main] INFO  controllers.MenuController - Deleted account id: 14
 03:05:41.426 [] [main] INFO  controllers.MenuController - Deleted account id: 15
+10:59:24.353 [] [main] INFO  services.UserService - An account has been given access level: 1
+10:59:24.360 [] [main] INFO  services.UserService - User{id='4', level='1', username='hulk', pwd='smash', keyword='Natasha', home=No home info available}
+11:00:55.027 [] [main] INFO  controllers.MenuController - Account id: 1 just transferred $400.0 into account id 3
+11:04:44.055 [] [main] INFO  services.UserService - new user made: User{id='6', level='0', username='steverogers', pwd='captain', keyword='shield', home=No home info available}
+11:06:35.871 [] [main] INFO  services.UserService - An account has been given access level: 1
+11:06:35.881 [] [main] INFO  services.UserService - User{id='6', level='1', username='steverogers', pwd='captain', keyword='shield', home=No home info available}
+11:07:06.987 [] [main] INFO  controllers.MenuController - Deleted user id: 6
+11:07:51.577 [] [main] INFO  controllers.MenuController - Account id: 1 just transferred $200.0 into account id 3

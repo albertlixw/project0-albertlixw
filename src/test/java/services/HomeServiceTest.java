@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HomeServiceTest {
     static HomeService homeService = new HomeService();
 
-    @BeforeAll
+    @Test
     void newHome() {
         Home home = new Home("homeName", "number", "street", "city", "region", "zip", "country");
         homeService.newHome(home);
@@ -46,11 +46,11 @@ class HomeServiceTest {
     }
 
 
-    @AfterAll
-    static void deleteHome() {
-        homeService.deleteHome("homeName");
-        assertNull(homeService.findByName("homeName"));
-    }
+//    @AfterAll
+//    static void deleteHome() {
+//        homeService.deleteHome("homeName");
+//        assertNull(homeService.findByName("homeName"));
+//    }
 //
 //    @BeforeAll
 //    static void beforeAll() {
