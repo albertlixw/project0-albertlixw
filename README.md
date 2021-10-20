@@ -68,14 +68,14 @@ The project will be evaluated out of 100 points split between three main catagor
 * 10 pts: Login, register, update and logout functionality for users.   √
 * 5 pts: Proper use of DAO design pattern.   √
 * 5 pts: Different user roles with different levels of access implemented correctly.  √
-* 5 pts: Reasonable test coverage of the service layer and proper logging. 
+* 5 pts: Reasonable test coverage of the service layer and proper logging.  √
 
 **Presentation Score**(25 pts):
-* 15 pts: Clear, concise, logical and professional communication during the project presentation.
-* 10 pts: Ability to communicate clear answers to fully address questions asked about the project. 
+* 15 pts: Clear, concise, logical and professional communication during the project presentation. √
+* 10 pts: Ability to communicate clear answers to fully address questions asked about the project.  √
 
 **Agile Score**(5 pts):
-* 5 pts: Kanban board and daily standup notes utilized and completed.
+* 5 pts: Kanban board and daily standup notes utilized and completed. √
 
 
 ## Frequently Asked Questions
